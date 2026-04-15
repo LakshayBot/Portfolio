@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { GridBackground } from "@/components/layout/GridBackground";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -17,7 +18,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Architect.dev | Thomas Jackson Portfolio",
+  title: "LAKSHAY.DEV | Thomas Jackson Portfolio",
   description:
     "Full Stack Developer — React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
 };
@@ -53,6 +54,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
+          <GridBackground />
           {children}
         </ThemeProvider>
       </body>

@@ -200,13 +200,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
   body {
     background-color: var(--color-md-background);
     color: var(--color-md-on-surface);
     font-family: var(--font-body), sans-serif;
-  }
-  html {
-    @apply font-sans;
   }
 }
 
@@ -269,4 +270,12 @@
 }
 .skill-card:hover {
   background-color: var(--color-md-surface-container-highest);
+}
+
+/* ─── Anchor scroll offset (fixed navbar compensation) ──────────────── */
+#projects,
+#services,
+#contact,
+#skills {
+  scroll-margin-top: 80px;
 }

@@ -1,12 +1,10 @@
 import { getContributions, getContributionColor } from "@/lib/github";
 
-const LEGEND = [
-  { label: "0",   color: "var(--color-md-surface-container)" },
-  { label: "1-2", color: "var(--color-md-primary-fixed-dim)" },
-  { label: "3-5", color: "var(--color-md-primary-fixed)" },
-  { label: "6-10",color: "var(--color-md-primary)" },
-  { label: "10+", color: "var(--color-md-primary-dim)" },
-];
+// Derive a short month label like "Jan '24" from a date string "2024-01-15"
+function monthLabel(dateStr: string): string {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString("en-US", { month: "short", year: "2-digit" });
+}
 
 export async function GithubCard() {
   let data;
@@ -17,116 +15,108 @@ export async function GithubCard() {
     data = null;
   }
 
-  const totalContributions = data?.totalContributions ?? 0;
-  // Flatten all days across all weeks for the grid
-  const allDays = data?.weeks.flatMap((w) => w.contributionDays) ?? [];
+  // Use last 26 weeks for a ~6-month view matching the reference image
+  const weeks = (data?.weeks ?? []).slice(-26);
 
-  // Keep only last 84 days (12 weeks × 7 days) for a compact display
-  const displayDays = allDays.slice(-84);
+  // Build month label positions: track when the month changes across weeks
+  const monthPositions: { label: string; col: number }[] = [];
+  let lastMonth = "";
+  weeks.forEach((week, colIndex) => {
+    const firstDay = week.contributionDays[0];
+    if (!firstDay) return;
+    const d = new Date(firstDay.date);
+    const mon = d.toLocaleDateString("en-US", { month: "short" });
+    const yr = `'${String(d.getFullYear()).slice(2)}`;
+    const label = `${mon} ${yr}`;
+    if (label !== lastMonth) {
+      monthPositions.push({ label, col: colIndex });
+      lastMonth = label;
+    }
+  });
+
+  // Show only the first and last month label (like the reference image)
+  const firstLabel = monthPositions[0];
+  const lastLabel = monthPositions[monthPositions.length - 1];
 
   return (
     <div
-      className="p-8 rounded-xl shadow-xl relative overflow-hidden group"
-      style={{ backgroundColor: "var(--color-md-surface-container-lowest)" }}
+      className="p-6 rounded-2xl relative overflow-hidden"
+      style={{
+        backgroundColor: "var(--color-md-surface-container-lowest)",
+        border: "1px solid var(--color-md-outline-variant)",
+      }}
     >
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-2">
-          <span
-            className="material-symbols-outlined"
-            style={{ color: "var(--color-md-on-surface-variant)" }}
-          >
-            terminal
-          </span>
-          <h3
-            className="font-bold text-lg"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-md-on-surface)",
-            }}
-          >
-            GITHUB contributions
-          </h3>
-        </div>
+      <div className="flex justify-between items-start mb-5">
         <span
-          className="text-xs font-mono"
+          className="text-sm font-semibold tracking-wide"
+          style={{
+            fontFamily: "var(--font-space-grotesk)",
+            color: "var(--color-md-on-surface-variant)",
+          }}
+        >
+          GITHUB contributions
+        </span>
+        {/* GitHub icon (SVG) */}
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-6 h-6"
           style={{ color: "var(--color-md-on-surface-variant)" }}
         >
-          Last 12 weeks
-        </span>
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+        </svg>
       </div>
 
-      {/* Heatmap grid — 12 columns × 7 rows */}
-      <div className="grid grid-cols-12 gap-1 mb-6">
-        {displayDays.length > 0 ? (
-          displayDays.map((day) => (
-            <div
-              key={day.date}
-              title={`${day.date}: ${day.contributionCount} contribution${
-                day.contributionCount !== 1 ? "s" : ""
-              }`}
-              className="aspect-square rounded-sm transition-opacity hover:opacity-80"
-              style={{ backgroundColor: getContributionColor(day.contributionCount) }}
-            />
-          ))
-        ) : (
-          // Fallback skeleton when API is unavailable
-          Array.from({ length: 84 }).map((_, i) => (
-            <div
-              key={i}
-              className="aspect-square rounded-sm"
-              style={{ backgroundColor: "var(--color-md-surface-container)" }}
-            />
-          ))
+      {/* Heatmap: columns = weeks, rows = days (Sun→Sat) */}
+      <div
+        className="grid gap-[3px]"
+        style={{ gridTemplateColumns: `repeat(${weeks.length}, 1fr)` }}
+      >
+        {weeks.map((week, wi) =>
+          // Always render 7 rows per week
+          Array.from({ length: 7 }).map((_, di) => {
+            const day = week.contributionDays[di];
+            return (
+              <div
+                key={`${wi}-${di}`}
+                title={
+                  day
+                    ? `${day.date}: ${day.contributionCount} contribution${day.contributionCount !== 1 ? "s" : ""}`
+                    : undefined
+                }
+                className="aspect-square rounded-[2px] transition-opacity hover:opacity-70"
+                style={{
+                  backgroundColor: day
+                    ? getContributionColor(day.contributionCount)
+                    : "var(--color-md-surface-container)",
+                  gridColumn: wi + 1,
+                  gridRow: di + 1,
+                }}
+              />
+            );
+          })
         )}
       </div>
 
-      {/* Footer: total count + legend */}
-      <div className="flex items-end justify-between">
-        <div>
+      {/* Month labels */}
+      <div className="flex justify-between mt-3">
+        {firstLabel && (
           <span
-            className="text-4xl font-black"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-md-on-surface)",
-            }}
-          >
-            {totalContributions.toLocaleString()}
-          </span>
-          <p
-            className="text-xs uppercase tracking-widest mt-1"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-md-on-surface-variant)",
-            }}
-          >
-            Total contributions
-          </p>
-        </div>
-
-        {/* Legend */}
-        <div className="flex gap-1 items-center">
-          <span
-            className="text-[10px]"
+            className="text-xs"
             style={{ color: "var(--color-md-on-surface-variant)" }}
           >
-            Less
+            {firstLabel.label}
           </span>
-          {LEGEND.map((l) => (
-            <div
-              key={l.label}
-              title={l.label}
-              className="w-3 h-3 rounded-sm"
-              style={{ backgroundColor: l.color }}
-            />
-          ))}
+        )}
+        {lastLabel && lastLabel.col !== firstLabel?.col && (
           <span
-            className="text-[10px]"
+            className="text-xs"
             style={{ color: "var(--color-md-on-surface-variant)" }}
           >
-            More
+            {lastLabel.label}
           </span>
-        </div>
+        )}
       </div>
     </div>
   );

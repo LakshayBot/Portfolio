@@ -1,84 +1,75 @@
 import { GithubCard } from "@/components/sections/GithubCard";
-import { ArchitectureCard } from "@/components/sections/ArchitectureCard";
 
 export async function Hero() {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-      {/* ── Left: Branding & Text ── */}
-      <div className="lg:col-span-7 space-y-8">
-        {/* Available tag */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span
-              className="w-12 h-[2px]"
-              style={{ backgroundColor: "var(--color-md-primary)" }}
-            />
-            <p
-              className="text-sm uppercase tracking-[0.2em] font-bold"
-              style={{
-                fontFamily: "var(--font-space-grotesk)",
-                color: "var(--color-md-primary)",
-              }}
-            >
-              Available for hire
-            </p>
+    <section className="space-y-10" style={{ containerType: "inline-size" }}>
+      {/*
+        ── Full-width headline ──
+        Using cqw (container query width units) so font-size is relative to
+        this section's width rather than the viewport.
+        Space Grotesk Black, uppercase, tracking-tighter (-0.05em).
+        "FULL STACK DEVELOPER" char count = 20 (including spaces).
+        Empirical: 4.6cqw fills the container for this string at this weight/tracking.
+        "LAKSH MALHOTRA" = 14 chars → same cqw → shorter line is fine (matches reference).
+      */}
+      <h1
+        className="font-black leading-[0.9] tracking-tighter uppercase w-full"
+        style={{
+          fontFamily: "var(--font-space-grotesk)",
+          color: "var(--color-md-on-surface)",
+          fontSize: "4.6cqw",
+        }}
+      >
+        <span className="block whitespace-nowrap">Full Stack Developer</span>
+        <span className="block whitespace-nowrap">Lakshay Malhotra</span>
+      </h1>
+
+      {/* ── Below headline: 2-col split ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        {/* Left: tech badge + description + CTA */}
+        <div className="space-y-6">
+          {/* Tech stack badge */}
+          <div
+            className="inline-block font-mono text-sm font-semibold tracking-wide"
+            style={{ color: "var(--color-md-on-surface)" }}
+          >
+            &lt;React.js Next.js Redux.js Node.js TypeScript&gt;
           </div>
 
-          {/* Headline */}
-          <h1
-            className="text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter uppercase"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-md-on-surface)",
-            }}
+          {/* Description */}
+          <p
+            className="text-base leading-relaxed max-w-md"
+            style={{ color: "var(--color-md-on-surface-variant)" }}
           >
-            Full Stack <br />
-            Developer <br />
-            <span style={{ color: "var(--color-md-primary-dim)" }}>
-              Thomas Jackson
-            </span>
-          </h1>
+            A full stack developer with experience in both team projects and
+            individual work, I focus on building scalable, efficient solutions.
+            With a background in engineering, I bring a structured,
+            problem-solving mindset to development.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap gap-4 pt-2">
+            <a
+              href="/cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-btn-primary px-8 py-3 rounded-full text-base font-black transition-all duration-200 inline-block"
+            >
+              Download CV
+            </a>
+            <a
+              href="#projects"
+              className="hero-btn-secondary px-8 py-3 text-base font-black transition-all duration-200 border-b-2 inline-block"
+            >
+              View Projects
+            </a>
+          </div>
         </div>
 
-        {/* Tech stack badge */}
-        <div
-          className="p-3 rounded inline-block font-mono text-sm tracking-wider"
-          style={{
-            backgroundColor: "var(--color-md-surface-container-low)",
-            color: "var(--color-md-on-surface-variant)",
-          }}
-        >
-          &lt;React.js Next.js Redux.js Node.js TypeScript&gt;
+        {/* Right: GitHub contributions card */}
+        <div>
+          <GithubCard />
         </div>
-
-        {/* Description */}
-        <p
-          className="text-xl max-w-xl leading-relaxed"
-          style={{ color: "var(--color-md-on-surface-variant)" }}
-        >
-          A full stack developer with experience in both team projects and
-          individual work, I focus on building scalable, efficient solutions.
-          With a background in engineering, I bring a structured,
-          problem-solving mindset to development.
-        </p>
-
-        {/* CTAs — pure CSS hover via Tailwind + custom props */}
-        <div className="pt-4 flex flex-wrap gap-4">
-          <button className="hero-btn-primary px-10 py-4 rounded-full text-lg font-black shadow-sm transition-all duration-200">
-            Download CV
-          </button>
-          <button className="hero-btn-secondary px-10 py-4 text-lg font-black transition-all duration-200 border-b-2">
-            View Projects
-          </button>
-        </div>
-      </div>
-
-      {/* ── Right: Cards ── */}
-      <div className="lg:col-span-5 relative space-y-6">
-        {/* GitHub heatmap — async RSC */}
-        <GithubCard />
-        {/* Architecture grade card */}
-        <ArchitectureCard />
       </div>
     </section>
   );

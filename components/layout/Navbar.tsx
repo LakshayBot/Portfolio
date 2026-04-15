@@ -29,22 +29,29 @@ export function Navbar() {
             color: "var(--color-md-on-surface)",
           }}
         >
-          ARCHITECT.DEV
+          LAKSHAY.DEV
         </div>
 
         {/* Nav links */}
         <div className="hidden md:flex items-center gap-8">
-          {["Projects", "Services", "GitHub", "CV"].map((link) => (
+          {[
+            { label: "Projects", href: "#projects" },
+            { label: "Services", href: "#services" },
+            { label: "GitHub", href: "https://github.com/LakshayBot", target: "_blank" },
+            { label: "CV", href: "/cv.pdf", target: "_blank" },
+          ].map((link) => (
             <a
-              key={link}
-              href="#"
+              key={link.label}
+              href={link.href}
+              target={link.target}
+              rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
               className="text-sm transition-colors duration-200 hover:text-[#CCFF00]"
               style={{
                 fontFamily: "var(--font-space-grotesk)",
                 color: "var(--color-md-on-surface-variant)",
               }}
             >
-              {link}
+              {link.label}
             </a>
           ))}
         </div>

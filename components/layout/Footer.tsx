@@ -23,7 +23,7 @@ export function Footer() {
               color: "var(--color-md-on-surface)",
             }}
           >
-            ARCHITECT.DEV
+            LAKSHAY.DEV
           </div>
           <p
             className="text-sm tracking-widest uppercase"
@@ -32,7 +32,7 @@ export function Footer() {
               color: "var(--color-md-on-surface-variant)",
             }}
           >
-            © 2024 Kinetic Architect. Built with precision.
+            © 2025 Lakshay Malhotra. Built with precision.
           </p>
         </div>
 
