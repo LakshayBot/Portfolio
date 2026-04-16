@@ -279,3 +279,15 @@
 #skills {
   scroll-margin-top: 80px;
 }
+
+/* ─── Project carousel progress bar ─────────────────────────────────── */
+@keyframes progress-fill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+.project-progress-bar {
+  animation: progress-fill 5s linear forwards;
+}
+.project-progress-bar.paused {
+  animation-play-state: paused;
+}

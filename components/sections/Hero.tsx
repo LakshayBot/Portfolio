@@ -1,28 +1,14 @@
 import { GithubCard } from "@/components/sections/GithubCard";
+import { HeroHeadline } from "@/components/sections/HeroHeadline";
 
 export async function Hero() {
   return (
     <section className="space-y-10" style={{ containerType: "inline-size" }}>
       {/*
-        ── Full-width headline ──
-        Using cqw (container query width units) so font-size is relative to
-        this section's width rather than the viewport.
-        Space Grotesk Black, uppercase, tracking-tighter (-0.05em).
-        "FULL STACK DEVELOPER" char count = 20 (including spaces).
-        Empirical: 4.6cqw fills the container for this string at this weight/tracking.
-        "LAKSH MALHOTRA" = 14 chars → same cqw → shorter line is fine (matches reference).
+        HeroHeadline is a "use client" component so TextEffect can run.
+        Extracted to keep Hero as an async RSC — required for GithubCard.
       */}
-      <h1
-        className="font-black leading-[0.9] tracking-tighter uppercase w-full"
-        style={{
-          fontFamily: "var(--font-space-grotesk)",
-          color: "var(--color-md-on-surface)",
-          fontSize: "4.6cqw",
-        }}
-      >
-        <span className="block whitespace-nowrap">Full Stack Developer</span>
-        <span className="block whitespace-nowrap">Lakshay Malhotra</span>
-      </h1>
+      <HeroHeadline />
 
       {/* ── Below headline: 2-col split ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

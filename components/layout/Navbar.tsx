@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { TextScramble } from "@/components/ui/text-scramble";
 
 export function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -21,7 +22,8 @@ export function Navbar() {
       }}
     >
       <div className="flex justify-between items-center px-8 py-4 max-w-full mx-auto">
-        {/* Brand */}
+
+        {/* Brand — scrambles once on page load */}
         <div
           className="text-xl font-bold tracking-tighter"
           style={{
@@ -29,7 +31,20 @@ export function Navbar() {
             color: "var(--color-md-on-surface)",
           }}
         >
-          LAKSHAY.DEV
+          {mounted ? (
+            <TextScramble
+              as="span"
+              duration={1.2}
+              speed={0.04}
+              trigger={true}
+              characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%"
+            >
+              LAKSHAY.DEV
+            </TextScramble>
+          ) : (
+            // SSR / pre-mount: render static to avoid layout shift
+            <span>LAKSHAY.DEV</span>
+          )}
         </div>
 
         {/* Nav links */}
