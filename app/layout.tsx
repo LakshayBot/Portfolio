@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "LAKSHAY.DEV | Thomas Jackson Portfolio",
+  title: "LAKSHAY.DEV",
   description:
     "Full Stack Developer — React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
 };
