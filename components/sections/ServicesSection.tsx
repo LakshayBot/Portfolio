@@ -27,6 +27,10 @@ export function ServicesSection() {
         marginLeft: "calc(50% - 50vw)",
         marginRight: "calc(50% - 50vw)",
         backgroundColor: "var(--color-md-background)",
+        minHeight: "100dvh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
         paddingTop: "5rem",
         paddingBottom: "5rem",
       }}

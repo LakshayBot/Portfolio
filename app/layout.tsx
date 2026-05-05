@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { GridBackground } from "@/components/layout/GridBackground";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -55,7 +56,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <GridBackground />
-          {children}
+          <SmoothScroll>{children}</SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

@@ -202,7 +202,7 @@
   }
   html {
     @apply font-sans;
-    scroll-behavior: smooth;
+    /* scroll-behavior handled by Lenis smooth scroll */
   }
   body {
     background-color: var(--color-md-background);

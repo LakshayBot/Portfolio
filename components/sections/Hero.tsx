@@ -3,7 +3,7 @@ import { HeroHeadline } from "@/components/sections/HeroHeadline";
 
 export async function Hero() {
   return (
-    <section className="space-y-10" style={{ containerType: "inline-size" }}>
+    <section className="space-y-8 w-full" style={{ containerType: "inline-size" }}>
       {/*
         HeroHeadline is a "use client" component so TextEffect can run.
         Extracted to keep Hero as an async RSC — required for GithubCard.

@@ -38,8 +38,12 @@ export function ContactSection() {
         backgroundColor: "#0c0f10",
         marginLeft: "calc(50% - 50vw)",
         marginRight: "calc(50% - 50vw)",
-        paddingTop: "7rem",
-        paddingBottom: "7rem",
+        minHeight: "100dvh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingTop: "5rem",
+        paddingBottom: "5rem",
       }}
     >
       <div className="max-w-7xl mx-auto px-8">

@@ -150,8 +150,12 @@ export function ProjectsSection() {
         backgroundColor: "#0c0f10",
         marginLeft: "calc(50% - 50vw)",
         marginRight: "calc(50% - 50vw)",
-        paddingTop: "6rem",
-        paddingBottom: "6rem",
+        minHeight: "100dvh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingTop: "5rem",
+        paddingBottom: "5rem",
       }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}

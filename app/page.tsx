@@ -10,25 +10,34 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="pt-32 pb-20 overflow-x-hidden">
-        {/* Hero */}
-        <div id="hero" className="px-8 max-w-7xl mx-auto">
-          <Hero />
-        </div>
+      <main className="overflow-x-hidden">
+        {/* ── Hero — full viewport height, vertically centered ── */}
+        <section
+          id="hero"
+          style={{
+            minHeight: "100dvh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <div className="pt-24 pb-8 px-8 max-w-7xl mx-auto w-full">
+            <Hero />
+          </div>
+          <KineticTicker />
+        </section>
 
-        {/* Kinetic ticker */}
-        <KineticTicker />
-
-        {/* Projects */}
+        {/* ── Projects ── */}
         <ProjectsSection />
 
-        {/* Services */}
+        {/* ── Services ── */}
         <ServicesSection />
 
-        {/* Contact */}
+        {/* ── Contact ── */}
         <ContactSection />
+
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }
