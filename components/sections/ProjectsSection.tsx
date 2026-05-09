@@ -1,64 +1,52 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
-const AUTO_ADVANCE_MS = 5000;
 
 interface Project {
   title: string;
   role: string;
-  frontendStack: string;
-  backendStack: string;
+  tags: string[];
   description: string[];
   url: string;
-  accentColor: string; // skeleton highlight colour per project
+  accentColor: string;
+  accentBg: string;
+  mockupUrl: string;
 }
 
 const projects: Project[] = [
   {
-    title: "Movie Matching\nWeb Application",
+    title: "CyberGuard AI",
     role: "Full Stack Developer",
-    frontendStack: "Next.js, TypeScript, Tailwind CSS",
-    backendStack: "MongoDB, Open AI API, TMDB API",
+    tags: [".NET 8", "FastAPI", "LangGraph", "OpenSearch", "Docker"],
+    url: "github.com/lakshaybot/cyberguard-ai",
+    accentColor: "#59ee50",
+    accentBg: "rgba(89,238,80,",
+    mockupUrl: "github.com/lakshaybot/cyberguard-ai",
+    description: [
+      "An agentic RAG platform for security advisory intelligence — combining a .NET 8 API gateway with five Python FastAPI microservices for vulnerability search, PDF analysis, and operational monitoring.",
+      "Built hybrid retrieval over GitHub Security Advisories using OpenSearch BM25 + vector search with Jina AI embeddings, enabling natural-language Q&A and agentic query rewriting via LangGraph workflows.",
+      "Orchestrated the full stack with Docker Compose: .NET gateway, LangChain/LangGraph AI services, Hangfire background jobs, Langfuse observability tracing, PostgreSQL, Redis, and OpenSearch — with JWT and OAuth authentication.",
+    ],
+  },
+  {
+    title: "Reel Reveal",
+    role: "Full Stack Developer",
+    tags: ["Next.js", "TypeScript", "MongoDB", "OpenAI API", "TMDB API"],
     url: "reel-reveal.app",
-    accentColor: "rgba(89,238,80,",
+    accentColor: "#63B3ED",
+    accentBg: "rgba(99,179,237,",
+    mockupUrl: "reel-reveal.app",
     description: [
-      "As a full-stack developer on this project, I took ownership of both the frontend and backend development, ensuring a seamless and intuitive user experience.",
-      "I built the frontend from scratch using modern frameworks and tools like Next.js, TypeScript, and Tailwind CSS, adhering to industry best practices for structure and scalability.",
-      "On the backend, I implemented a secure and efficient system using MongoDB for data management and Google Authentication for user login. Additionally, I integrated the Open AI API to deliver personalised, AI-driven movie recommendations.",
-    ],
-  },
-  {
-    title: "E-Commerce\nDashboard",
-    role: "Frontend Developer",
-    frontendStack: "React, Redux, Styled Components",
-    backendStack: "Node.js, Express, PostgreSQL",
-    url: "dashboard.storefront.io",
-    accentColor: "rgba(99,179,237,",
-    description: [
-      "Designed and built a high-performance merchant dashboard handling real-time inventory, order management, and sales analytics for an e-commerce platform.",
-      "Leveraged React and Redux for predictable state management across complex data flows, with Styled Components enabling a fully themeable UI system.",
-      "The backend REST API was built with Node.js and Express, backed by a PostgreSQL database optimised with indexed queries to support sub-100ms response times at scale.",
-    ],
-  },
-  {
-    title: "DevOps Monitoring\nPlatform",
-    role: "Full Stack Developer",
-    frontendStack: "Next.js, TypeScript, Recharts",
-    backendStack: "Docker, Prometheus, Node.js",
-    url: "ops.infrawatch.dev",
-    accentColor: "rgba(246,173,85,",
-    description: [
-      "Built an internal DevOps observability platform that aggregates metrics from Prometheus and surfaces them through a real-time dashboard built with Next.js and Recharts.",
-      "Containerised the entire stack with Docker Compose, enabling one-command local and production deployments with isolated service boundaries.",
-      "Implemented alerting pipelines and threshold-based notification triggers, giving engineering teams instant visibility into infrastructure degradation before it impacts users.",
+      "A movie matching web application that delivers personalised film recommendations — built end-to-end with Next.js, TypeScript, and Tailwind CSS on the frontend.",
+      "Integrated the OpenAI API to generate AI-driven recommendations tailored to each user's taste, and the TMDB API for rich movie metadata, trailers, and cast information.",
+      "Implemented secure user authentication with Google OAuth via NextAuth.js and MongoDB for persistent user profiles, watchlists, and preference history.",
     ],
   },
 ];
 
-// ─── Desktop browser mockup ───────────────────────────────────────────
-function DesktopMockup({ url, accent }: { url: string; accent: string }) {
+// ─── Browser skeleton mockup ──────────────────────────────────────────
+function DesktopMockup({ url, accentBg }: { url: string; accentBg: string }) {
   return (
     <div
       className="w-full rounded-2xl overflow-hidden"
@@ -87,16 +75,16 @@ function DesktopMockup({ url, accent }: { url: string; accent: string }) {
           {url}
         </div>
       </div>
-      {/* Skeleton */}
+      {/* Skeleton body */}
       <div className="p-5 space-y-3">
         <div className="flex justify-between items-center mb-4">
-          <div className="h-3 w-24 rounded-full" style={{ backgroundColor: `${accent}0.3)` }} />
+          <div className="h-3 w-24 rounded-full" style={{ backgroundColor: `${accentBg}0.3)` }} />
           <div className="h-3 w-32 rounded-full" style={{ backgroundColor: "rgba(255,255,255,0.06)" }} />
         </div>
         <div
           className="h-28 rounded-xl"
           style={{
-            background: `linear-gradient(135deg, ${accent}0.1) 0%, rgba(255,255,255,0.03) 100%)`,
+            background: `linear-gradient(135deg, ${accentBg}0.1) 0%, rgba(255,255,255,0.03) 100%)`,
           }}
         />
         <div className="grid grid-cols-3 gap-2 pt-1">
@@ -109,39 +97,212 @@ function DesktopMockup({ url, accent }: { url: string; accent: string }) {
   );
 }
 
-// ─── Main section ─────────────────────────────────────────────────────
+// ─── Arrow icon ───────────────────────────────────────────────────────
+function ArrowIcon({ visible }: { visible: boolean }) {
+  return (
+    <motion.svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      animate={{ opacity: visible ? 1 : 0, x: visible ? 0 : -6 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      style={{ flexShrink: 0 }}
+    >
+      <path
+        d="M4 16L16 4M16 4H7M16 4V13"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </motion.svg>
+  );
+}
+
+// ─── Single project row ───────────────────────────────────────────────
+function ProjectRow({
+  project,
+  index,
+  isOpen,
+  onToggle,
+}: {
+  project: Project;
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+    >
+      {/* ── Collapsed header row ── */}
+      <button
+        className="w-full text-left"
+        onClick={onToggle}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        aria-expanded={isOpen}
+      >
+        <div className="flex items-center gap-6 py-7 group">
+
+          {/* Index number */}
+          <span
+            className="font-mono font-bold shrink-0 w-8 tabular-nums"
+            style={{
+              fontSize: "0.8rem",
+              color: isOpen ? project.accentColor : "rgba(255,255,255,0.2)",
+              transition: "color 0.2s ease",
+            }}
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
+
+          {/* Title + role */}
+          <div className="flex-1 min-w-0">
+            <h3
+              className="font-black tracking-tight leading-none"
+              style={{
+                fontFamily: "var(--font-space-grotesk)",
+                fontSize: "clamp(1.6rem, 3vw, 2.5rem)",
+                color: isOpen || hovered ? "#ffffff" : "rgba(255,255,255,0.75)",
+                transition: "color 0.2s ease",
+              }}
+            >
+              {project.title}
+            </h3>
+            <p
+              className="mt-1.5 text-sm font-medium"
+              style={{
+                color: isOpen ? project.accentColor : "rgba(255,255,255,0.3)",
+                fontFamily: "var(--font-space-grotesk)",
+                transition: "color 0.2s ease",
+              }}
+            >
+              {project.role}
+            </p>
+          </div>
+
+          {/* Tags — hidden on small screens */}
+          <div className="hidden md:flex items-center gap-2 shrink-0 flex-wrap justify-end max-w-sm">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[11px] font-semibold px-2.5 py-1 rounded-full"
+                style={{
+                  backgroundColor: isOpen
+                    ? `${project.accentBg}0.1)`
+                    : "rgba(255,255,255,0.05)",
+                  color: isOpen ? project.accentColor : "rgba(255,255,255,0.35)",
+                  border: `1px solid ${isOpen ? project.accentColor + "33" : "rgba(255,255,255,0.06)"}`,
+                  transition: "all 0.2s ease",
+                  fontFamily: "var(--font-space-grotesk)",
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Arrow */}
+          <div
+            style={{
+              color: isOpen ? project.accentColor : "rgba(255,255,255,0.3)",
+              transition: "color 0.2s ease, transform 0.3s ease",
+              transform: isOpen ? "rotate(0deg)" : "rotate(45deg)",
+            }}
+          >
+            <ArrowIcon visible={hovered || isOpen} />
+          </div>
+        </div>
+      </button>
+
+      {/* ── Expanded detail panel ── */}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            key="detail"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+            style={{ overflow: "hidden" }}
+          >
+            <div className="pb-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+
+              {/* Left: description */}
+              <div className="space-y-4">
+                {/* Tags on mobile */}
+                <div className="flex md:hidden flex-wrap gap-2 mb-6">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[11px] font-semibold px-2.5 py-1 rounded-full"
+                      style={{
+                        backgroundColor: `${project.accentBg}0.1)`,
+                        color: project.accentColor,
+                        border: `1px solid ${project.accentColor}33`,
+                        fontFamily: "var(--font-space-grotesk)",
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {project.description.map((para, i) => (
+                  <p
+                    key={i}
+                    className="text-sm leading-[1.85]"
+                    style={{ color: "rgba(255,255,255,0.5)" }}
+                  >
+                    {para}
+                  </p>
+                ))}
+
+                {/* Visit link */}
+                <a
+                  href={`https://${project.url}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-4 text-sm font-semibold transition-opacity duration-150 hover:opacity-70"
+                  style={{
+                    color: project.accentColor,
+                    fontFamily: "var(--font-space-grotesk)",
+                  }}
+                >
+                  View Project
+                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                    <path
+                      d="M4 16L16 4M16 4H7M16 4V13"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </a>
+              </div>
+
+              {/* Right: mockup */}
+              <DesktopMockup url={project.url} accentBg={project.accentBg} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ─── Section ──────────────────────────────────────────────────────────
 export function ProjectsSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const goTo = useCallback((index: number) => {
-    setActiveIndex(index);
-  }, []);
-
-  const goPrev = useCallback(() => {
-    setActiveIndex((i) => (i - 1 + projects.length) % projects.length);
-  }, []);
-
-  const goNext = useCallback(() => {
-    setActiveIndex((i) => (i + 1) % projects.length);
-  }, []);
-
-  // Auto-advance
-  useEffect(() => {
-    if (isPaused) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      return;
-    }
-    intervalRef.current = setInterval(() => {
-      setActiveIndex((i) => (i + 1) % projects.length);
-    }, AUTO_ADVANCE_MS);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isPaused, activeIndex]); // restart interval on each index change so progress bar syncs
-
-  const project = projects[activeIndex];
+  const toggle = (i: number) => {
+    setOpenIndex((prev) => (prev === i ? null : i));
+  };
 
   return (
     <section
@@ -157,15 +318,13 @@ export function ProjectsSection() {
         paddingTop: "5rem",
         paddingBottom: "5rem",
       }}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-8 w-full">
 
-        {/* ── Headline ── */}
+        {/* Headline */}
         <div style={{ containerType: "inline-size" }}>
           <h2
-            className="font-black leading-[0.9] tracking-tighter uppercase mb-20 whitespace-nowrap"
+            className="font-black leading-[0.9] tracking-tighter uppercase mb-16 whitespace-nowrap"
             style={{
               fontFamily: "var(--font-space-grotesk)",
               color: "#ffffff",
@@ -176,164 +335,19 @@ export function ProjectsSection() {
           </h2>
         </div>
 
-        {/* ── Animated project content ── */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-
-              {/* ── Left: meta ── */}
-              <div>
-                {/* Counter + arrows */}
-                <div className="flex items-center gap-4 mb-3">
-                  <button
-                    onClick={goPrev}
-                    aria-label="Previous project"
-                    className="transition-opacity duration-150 hover:opacity-100"
-                    style={{
-                      fontFamily: "var(--font-space-grotesk)",
-                      color: "rgba(255,255,255,0.4)",
-                      fontSize: "1.1rem",
-                      fontWeight: 700,
-                      lineHeight: 1,
-                    }}
-                  >
-                    ←
-                  </button>
-
-                  <span
-                    className="font-mono font-bold"
-                    style={{ color: "rgba(255,255,255,0.55)", fontSize: "1rem" }}
-                  >
-                    {String(activeIndex + 1).padStart(2, "0")}
-                    <span style={{ color: "rgba(255,255,255,0.2)" }}>
-                      {" / "}
-                      {String(projects.length).padStart(2, "0")}
-                    </span>
-                  </span>
-
-                  <button
-                    onClick={goNext}
-                    aria-label="Next project"
-                    className="transition-opacity duration-150 hover:opacity-100"
-                    style={{
-                      fontFamily: "var(--font-space-grotesk)",
-                      color: "rgba(255,255,255,0.4)",
-                      fontSize: "1.1rem",
-                      fontWeight: 700,
-                      lineHeight: 1,
-                    }}
-                  >
-                    →
-                  </button>
-                </div>
-
-                {/* Progress bar */}
-                <div
-                  className="w-full rounded-full mb-10 overflow-hidden"
-                  style={{ height: "2px", backgroundColor: "rgba(255,255,255,0.08)" }}
-                >
-                  <div
-                    key={activeIndex}
-                    className={`h-full rounded-full project-progress-bar${isPaused ? " paused" : ""}`}
-                    style={{ backgroundColor: "#59ee50" }}
-                  />
-                </div>
-
-                {/* Title */}
-                <h3
-                  className="font-black leading-[1.05] tracking-tight mb-10 whitespace-pre-line"
-                  style={{
-                    fontFamily: "var(--font-space-grotesk)",
-                    color: "#ffffff",
-                    fontSize: "clamp(2rem, 3.5vw, 3.25rem)",
-                  }}
-                >
-                  {project.title}
-                </h3>
-
-                {/* Role */}
-                <div className="mb-6">
-                  <p className="text-[11px] uppercase tracking-[0.18em] mb-1.5 font-medium"
-                    style={{ color: "rgba(255,255,255,0.3)" }}>
-                    Role
-                  </p>
-                  <p className="text-sm font-semibold" style={{ color: "#59ee50" }}>
-                    {project.role}
-                  </p>
-                </div>
-
-                {/* Frontend stack */}
-                <div className="mb-5">
-                  <p className="text-[11px] uppercase tracking-[0.18em] mb-1.5 font-medium"
-                    style={{ color: "rgba(255,255,255,0.3)" }}>
-                    Frontend Stack
-                  </p>
-                  <p className="text-sm" style={{ color: "rgba(255,255,255,0.75)" }}>
-                    {project.frontendStack}
-                  </p>
-                </div>
-
-                {/* Backend */}
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] mb-1.5 font-medium"
-                    style={{ color: "rgba(255,255,255,0.3)" }}>
-                    Backend
-                  </p>
-                  <p className="text-sm" style={{ color: "rgba(255,255,255,0.75)" }}>
-                    {project.backendStack}
-                  </p>
-                </div>
-
-                {/* Description */}
-                <div className="mt-10 space-y-4 max-w-lg">
-                  {project.description.map((para, i) => (
-                    <p
-                      key={i}
-                      className="text-sm leading-[1.8]"
-                      style={{ color: "rgba(255,255,255,0.5)" }}
-                    >
-                      {para}
-                    </p>
-                  ))}
-                </div>
-              </div>
-
-              {/* ── Right: mockup ── */}
-              <div>
-                <DesktopMockup url={project.url} accent={project.accentColor} />
-              </div>
-
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* ── Project strip ── */}
-        <div
-          className="mt-16 flex flex-wrap gap-x-8 gap-y-3"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "2rem" }}
-        >
-          {projects.map((p, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className="text-sm font-semibold tracking-wide transition-all duration-200 pb-0.5 text-left"
-              style={{
-                fontFamily: "var(--font-space-grotesk)",
-                color: i === activeIndex ? "#59ee50" : "rgba(255,255,255,0.3)",
-                borderBottom: i === activeIndex
-                  ? "1px solid #59ee50"
-                  : "1px solid transparent",
-              }}
-            >
-              {p.title.replace("\n", " ")}
-            </button>
+        {/* Project rows */}
+        <div>
+          {projects.map((project, i) => (
+            <ProjectRow
+              key={project.title}
+              project={project}
+              index={i}
+              isOpen={openIndex === i}
+              onToggle={() => toggle(i)}
+            />
           ))}
+          {/* Bottom border */}
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }} />
         </div>
 
       </div>

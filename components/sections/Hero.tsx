@@ -19,7 +19,7 @@ export async function Hero() {
             className="inline-block font-mono text-sm font-semibold tracking-wide"
             style={{ color: "var(--color-md-on-surface)" }}
           >
-            &lt;React.js Next.js Redux.js Node.js TypeScript&gt;
+            &lt;Next.js &middot; .NET &middot; TypeScript &middot; Python &middot; React&gt;
           </div>
 
           {/* Description */}
@@ -27,10 +27,10 @@ export async function Hero() {
             className="text-base leading-relaxed max-w-md"
             style={{ color: "var(--color-md-on-surface-variant)" }}
           >
-            A full stack developer with experience in both team projects and
-            individual work, I focus on building scalable, efficient solutions.
-            With a background in engineering, I bring a structured,
-            problem-solving mindset to development.
+            A full stack developer specialising in AI-integrated systems and
+            microservice architectures — from Next.js frontends and .NET API
+            gateways to agentic RAG pipelines, containerised multi-service
+            deployments, and LLM-powered search.
           </p>
 
           {/* CTAs */}
@@ -45,7 +45,7 @@ export async function Hero() {
             </a>
             <a
               href="#projects"
-              className="hero-btn-secondary px-8 py-3 text-base font-black transition-all duration-200 border-b-2 inline-block"
+              className="hero-btn-secondary px-8 py-3 text-base font-black transition-all duration-200 inline-block"
             >
               View Projects
             </a>

@@ -1,21 +1,27 @@
 const services = [
   {
-    icon: "table_rows_narrow",
-    title: "Frontend Development",
+    icon: "layers",
+    title: "Full Stack Development",
     description:
-      "Building responsive and intuitive user interfaces using modern frameworks like React and TypeScript with Tailwind CSS.",
+      "End-to-end application delivery — from Next.js and React frontends to .NET 8 API gateways and Python backends, with TypeScript throughout.",
   },
   {
-    icon: "code",
-    title: "Backend Development",
+    icon: "psychology",
+    title: "AI & RAG Systems",
     description:
-      "Developing scalable backend systems and integrating APIs to manage event data seamlessly.",
+      "Agentic RAG pipelines, LangChain and LangGraph workflows, local LLM integration via Ollama, and semantic search with vector embeddings.",
   },
   {
-    icon: "tune",
-    title: "Performance Optimization",
+    icon: "hub",
+    title: "Backend & API Architecture",
     description:
-      "Optimising performance, ensuring secure user authentication, and refactoring code to improve speed and maintainability.",
+      "Microservice design, REST API gateways, JWT and OAuth authentication, Hangfire background jobs, PostgreSQL with EF Core, and Redis caching.",
+  },
+  {
+    icon: "deployed_code",
+    title: "DevOps & Infrastructure",
+    description:
+      "Docker Compose multi-service deployments, OpenSearch hybrid retrieval, and observability pipelines with Langfuse tracing and ClickHouse.",
   },
 ];
 
@@ -52,7 +58,7 @@ export function ServicesSection() {
         </div>
 
         {/* ── Flat 3-col grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service) => (
             <div
               key={service.title}

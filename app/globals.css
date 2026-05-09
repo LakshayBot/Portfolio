@@ -238,6 +238,14 @@
   animation: marquee 30s linear infinite;
 }
 
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.animate-marquee-reverse {
+  animation: marquee-reverse 30s linear infinite;
+}
+
 /* ─── Selection colors ───────────────────────────────────────────────── */
 ::selection {
   background-color: var(--color-md-primary-container);
