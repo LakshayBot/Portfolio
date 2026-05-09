@@ -1,3 +1,8 @@
+// Force this route to be rendered dynamically at request time (not statically
+// at build time) so the Cloudflare Workers env bindings — including
+// GITHUB_TOKEN — are available when GithubCard fetches contribution data.
+export const dynamic = "force-dynamic";
+
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
