@@ -33,23 +33,13 @@ const GITHUB_CONTRIBUTIONS_QUERY = `
 export async function getContributions(
   username: string
 ): Promise<ContributionData> {
-  // In the Cloudflare Workers runtime, secrets are accessed via the
-  // cloudflare:workers env import — not process.env. Fall back to
-  // process.env so local `next dev` (Node.js) still works with .env.
-  let token: string | undefined = process.env.GITHUB_TOKEN;
-
-  if (!token) {
-    try {
-      // cloudflare:workers is a virtual module only available in the Workers
-      // runtime. TypeScript doesn't know about it, hence the expect-error.
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error: cloudflare:workers is not in TS lib but exists at runtime
-      const { env } = await import("cloudflare:workers");
-      token = (env as Record<string, string | undefined>).GITHUB_TOKEN;
-    } catch {
-      // Not running in the Workers runtime (e.g. local next dev). Ignore.
-    }
-  }
+  // process.env works in both environments:
+  //   - Local next dev: reads from .env file via Next.js
+  //   - Cloudflare Workers runtime: reads secrets/vars set in the dashboard
+  // The cloudflare:workers virtual module approach cannot be used because
+  // esbuild (run by opennextjs-cloudflare build) cannot resolve it at
+  // bundle time and there is no way to mark it external from userland config.
+  const token = process.env.GITHUB_TOKEN;
 
   if (!token) {
     throw new Error("GITHUB_TOKEN is not set");
@@ -65,8 +55,8 @@ export async function getContributions(
       query: GITHUB_CONTRIBUTIONS_QUERY,
       variables: { username },
     }),
-    // Use standard fetch cache — next: { revalidate } is a Next.js Node.js
-    // extension that is not available in the Cloudflare Workers runtime.
+    // cache: no-store — next: { revalidate } is a Next.js Node.js extension
+    // unavailable in the Cloudflare Workers runtime.
     cache: "no-store",
   });
 
