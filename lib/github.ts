@@ -33,26 +33,13 @@ const GITHUB_CONTRIBUTIONS_QUERY = `
 export async function getContributions(
   username: string
 ): Promise<ContributionData> {
-  // process.env works locally and for build-time variables.
-  // On Cloudflare Pages at runtime, secrets set in the dashboard are only
-  // available through the Cloudflare Workers env binding — so we fall back
-  // to getCloudflareContext() when process.env doesn't have the token.
-  let token = process.env.GITHUB_TOKEN;
+  // On Cloudflare Workers (both via wrangler dev and deployed production),
+  // secrets and environment variables set in the Cloudflare dashboard are
+  // available on process.env at runtime. No special adapter call needed.
+  const token = process.env.GITHUB_TOKEN;
 
   if (!token) {
-    try {
-      const { getCloudflareContext } = await import("@opennextjs/cloudflare");
-      const ctx = await getCloudflareContext({ async: true });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      token = (ctx.env as any).GITHUB_TOKEN as string | undefined;
-    } catch {
-      // getCloudflareContext is unavailable outside the Cloudflare runtime —
-      // ignore and let the check below throw a clear error.
-    }
-  }
-
-  if (!token) {
-    throw new Error("GITHUB_TOKEN environment variable is not set");
+    throw new Error("GITHUB_TOKEN is not set");
   }
 
   const response = await fetch("https://api.github.com/graphql", {
@@ -65,12 +52,15 @@ export async function getContributions(
       query: GITHUB_CONTRIBUTIONS_QUERY,
       variables: { username },
     }),
-    // Revalidate every 6 hours
-    next: { revalidate: 21600 },
+    // Use standard fetch cache — next: { revalidate } is a Next.js Node.js
+    // extension that is not available in the Cloudflare Workers runtime.
+    cache: "no-store",
   });
 
   if (!response.ok) {
-    throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+    throw new Error(
+      `GitHub API error: ${response.status} ${response.statusText}`
+    );
   }
 
   const json = await response.json();
