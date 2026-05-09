@@ -1,11 +1,5 @@
 import { getContributions, getContributionColor } from "@/lib/github";
 
-// Derive a short month label like "Jan '24" from a date string "2024-01-15"
-function monthLabel(dateStr: string): string {
-  const d = new Date(dateStr);
-  return d.toLocaleDateString("en-US", { month: "short", year: "2-digit" });
-}
-
 export async function GithubCard() {
   let data;
   try {
