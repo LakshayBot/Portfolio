@@ -293,12 +293,15 @@
 }
 
 /* ─── Mobile performance: defer off-screen section rendering ─────────── */
+/* NOTE: content-visibility:auto breaks scroll-driven animations (Framer
+   Motion useScroll, GSAP ScrollTrigger, SVG follow-scroll paths) because
+   the browser reports wrong element dimensions for skipped content.
+   Instead, use lighter containment on individual paint-heavy children. */
 @media (max-width: 1023px) {
   #services,
   #skills,
   #contact {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 100dvh;
+    contain: layout style;
   }
 }
 

@@ -39,6 +39,7 @@ const services = [
 
 export function ServicesSection() {
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
   const [touch, setTouch] = useState(false);
 
   useEffect(() => {
@@ -95,23 +96,22 @@ export function ServicesSection() {
             >
               {services.map((service) => {
                 const isOpen = expanded === service.number;
+                const isHovered = hovered === service.number;
                 return (
                   <div
                     key={service.number}
                     className="cursor-pointer transition-colors duration-300"
                     style={{
                       borderBottom: `1px solid var(--color-md-surface-container-highest)`,
+                      backgroundColor: isHovered
+                        ? "var(--color-md-surface-container-low)"
+                        : "transparent",
                     }}
                     onClick={() =>
                       setExpanded(isOpen ? null : service.number)
                     }
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        "var(--color-md-surface-container-low)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "transparent";
-                    }}
+                    onMouseEnter={() => setHovered(service.number)}
+                    onMouseLeave={() => setHovered(null)}
                   >
                     {/* Header row */}
                     <div className="flex justify-between items-center py-5 px-4">
