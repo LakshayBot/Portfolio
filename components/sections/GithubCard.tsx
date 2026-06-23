@@ -1,9 +1,10 @@
 import { getContributions, getContributionColor } from "@/lib/github";
+import { siteConfig } from "@/data/site-config";
 
 export async function GithubCard() {
   let data;
   try {
-    data = await getContributions("LakshayBot");
+    data = await getContributions(siteConfig.githubUsername);
   } catch (err) {
     console.error("GitHub fetch failed:", err);
     data = null;

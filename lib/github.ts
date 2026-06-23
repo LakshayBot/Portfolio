@@ -97,9 +97,19 @@ async function getGraphqlContributions(
       variables: { username },
     }),
     // cache: no-store — next: { revalidate } is a Next.js Node.js extension
-    // unavailable in the Cloudflare Workers runtime.
+    // unavailable in the Cloudflare Workers runtime. For edge caching,
+    // configure a Cache-Control rule in the Cloudflare dashboard instead.
     cache: "no-store",
   });
+
+  // Log rate-limit info for monitoring
+  const rateLimit = response.headers.get("X-RateLimit-Remaining");
+  if (rateLimit && Number(rateLimit) < 100) {
+    console.warn(
+      `GitHub API rate limit low: ${rateLimit} remaining. ` +
+      `Resets at ${response.headers.get("X-RateLimit-Reset")}`
+    );
+  }
 
   if (!response.ok) {
     throw new Error(
@@ -163,6 +173,15 @@ function parseContributionHtml(html: string): Map<string, number> {
     }
 
     days.set(date, readContributionCount(match[2]));
+  }
+
+  // Validate: a full year of data should have ~365 days. If we found fewer
+  // than 10 days, the HTML structure likely changed and parsing failed silently.
+  if (days.size < 10) {
+    console.warn(
+      `GitHub public calendar parse: only ${days.size} days found. ` +
+      "The GitHub HTML structure may have changed — the heatmap may appear empty."
+    );
   }
 
   return days;

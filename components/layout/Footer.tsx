@@ -1,7 +1,9 @@
+import { siteConfig } from "@/data/site-config";
+
 const socialLinks = [
-  { label: "Twitter", href: "#" },
-  { label: "LinkedIn", href: "#" },
-  { label: "Source Code", href: "#" },
+  { label: "Twitter", href: siteConfig.socials.twitter },
+  { label: "LinkedIn", href: siteConfig.socials.linkedin },
+  { label: "Source Code", href: siteConfig.socials.github },
 ];
 
 export function Footer() {

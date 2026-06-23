@@ -299,3 +299,15 @@
 .project-progress-bar.paused {
   animation-play-state: paused;
 }
+
+/* ─── Reduced motion ────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none;
+  }
+
+  .project-progress-bar {
+    animation: none;
+  }
+}

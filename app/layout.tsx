@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { GridBackground } from "@/components/layout/GridBackground";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { siteConfig } from "@/data/site-config";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -22,6 +23,25 @@ export const metadata: Metadata = {
   title: "LAKSHAY.DEV",
   description:
     "Full Stack Developer — React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
+  openGraph: {
+    title: "LAKSHAY.DEV — Full Stack Developer",
+    description:
+      "React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
+    url: "https://lakshay.dev",
+    siteName: "LAKSHAY.DEV",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LAKSHAY.DEV — Full Stack Developer",
+    description:
+      "React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -46,6 +66,24 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
+        />
+        {/* JSON-LD structured data for rich search results */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: siteConfig.name,
+              url: siteConfig.url,
+              jobTitle: siteConfig.title,
+              sameAs: [
+                siteConfig.socials.github,
+                siteConfig.socials.linkedin,
+                siteConfig.socials.twitter,
+              ],
+            }),
+          }}
         />
       </head>
       <body className="min-h-screen antialiased">

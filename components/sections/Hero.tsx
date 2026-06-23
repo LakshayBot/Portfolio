@@ -19,7 +19,7 @@ export async function Hero() {
             className="inline-block font-mono text-sm font-semibold tracking-wide"
             style={{ color: "var(--color-md-on-surface)" }}
           >
-            &lt;Next.js &middot; .NET &middot; TypeScript &middot; Python &middot; React&gt;
+            Next.js &middot; .NET &middot; TypeScript &middot; Python &middot; Docker
           </div>
 
           {/* Description */}
@@ -27,21 +27,19 @@ export async function Hero() {
             className="text-base leading-relaxed max-w-md"
             style={{ color: "var(--color-md-on-surface-variant)" }}
           >
-            A full stack developer specialising in AI-integrated systems and
-            microservice architectures — from Next.js frontends and .NET API
-            gateways to agentic RAG pipelines, containerised multi-service
-            deployments, and LLM-powered search.
+            A full stack developer building AI-integrated systems and
+            microservice architectures. My work spans Next.js frontends,
+            .NET API gateways, agentic RAG pipelines, and containerised
+            multi-service deployments with Docker.
           </p>
 
           {/* CTAs */}
           <div className="flex flex-wrap gap-4 pt-2">
             <a
-              href="/cv.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/cv"
               className="hero-btn-primary px-8 py-3 rounded-full text-base font-black transition-all duration-200 inline-block"
             >
-              Download CV
+              View CV
             </a>
             <a
               href="#projects"

@@ -5,6 +5,7 @@ import { Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSyncExternalStore } from "react";
 import { TextScramble } from "@/components/ui/text-scramble";
+import { siteConfig } from "@/data/site-config";
 
 const subscribeToHydration = () => () => {};
 const getClientSnapshot = () => true;
@@ -57,8 +58,8 @@ export function Navbar() {
           {[
             { label: "Projects", href: "#projects" },
             { label: "Services", href: "#services" },
-            { label: "GitHub", href: "https://github.com/LakshayBot", target: "_blank" },
-            { label: "CV", href: "/cv.pdf", target: "_blank" },
+            { label: "GitHub", href: siteConfig.socials.github, target: "_blank" },
+            { label: "CV", href: "/cv", target: "_blank" },
           ].map((link) => (
             <a
               key={link.label}

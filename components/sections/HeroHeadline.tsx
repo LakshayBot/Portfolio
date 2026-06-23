@@ -1,6 +1,7 @@
 "use client";
 
 import { TextEffect } from "@/components/ui/text-effect";
+import { siteConfig } from "@/data/site-config";
 
 export function HeroHeadline() {
   return (
@@ -20,7 +21,7 @@ export function HeroHeadline() {
         delay={0}
         className="block whitespace-nowrap"
       >
-        Full Stack Developer
+        {siteConfig.title}
       </TextEffect>
 
       {/* Line 2 — words blur in 0.3s after line 1 starts */}
@@ -31,7 +32,7 @@ export function HeroHeadline() {
         delay={0.3}
         className="block whitespace-nowrap"
       >
-        Lakshay Malhotra
+        {siteConfig.name}
       </TextEffect>
     </h1>
   );
