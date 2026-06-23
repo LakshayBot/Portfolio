@@ -1,11 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSyncExternalStore } from "react";
 import { TextScramble } from "@/components/ui/text-scramble";
 import { siteConfig } from "@/data/site-config";
+
+function isTouchDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0
+  );
+}
 
 const subscribeToHydration = () => () => {};
 const getClientSnapshot = () => true;
@@ -18,10 +27,15 @@ export function Navbar() {
     getClientSnapshot,
     getServerSnapshot
   );
+  const [touch, setTouch] = useState(false);
+
+  useEffect(() => {
+    setTouch(isTouchDevice());
+  }, []);
 
   return (
     <nav
-      className="fixed top-0 w-full z-50 backdrop-blur-xl"
+      className={`fixed top-0 w-full z-50 ${touch ? "backdrop-blur-lg" : "backdrop-blur-xl"}`}
       style={{
         backgroundColor: "color-mix(in srgb, var(--color-md-surface-container-low) 80%, transparent)",
         borderBottom: "1px solid color-mix(in srgb, var(--color-md-outline-variant) 30%, transparent)",

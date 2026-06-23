@@ -1,6 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+function isTouchDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0
+  );
+}
 
 const services = [
   {
@@ -31,6 +39,11 @@ const services = [
 
 export function ServicesSection() {
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [touch, setTouch] = useState(false);
+
+  useEffect(() => {
+    setTouch(isTouchDevice());
+  }, []);
 
   return (
     <section
@@ -165,17 +178,20 @@ export function ServicesSection() {
 
             {/* Rotated card */}
             <div
-              className="relative w-full max-w-sm aspect-[4/5] transition-transform duration-700 ease-in-out rounded-lg overflow-hidden"
+              className="relative w-full max-w-sm aspect-[4/5] rounded-lg overflow-hidden"
               style={{
-                transform: "rotate(6deg)",
+                transform: touch ? "rotate(2deg)" : "rotate(6deg)",
                 backgroundColor: "var(--color-md-surface-container)",
                 boxShadow:
                   "0 20px 60px -15px rgba(0,0,0,0.15)",
+                transition: touch ? "none" : "transform 700ms ease-in-out",
               }}
               onMouseEnter={(e) => {
+                if (touch) return;
                 e.currentTarget.style.transform = "rotate(3deg)";
               }}
               onMouseLeave={(e) => {
+                if (touch) return;
                 e.currentTarget.style.transform = "rotate(6deg)";
               }}
             >
@@ -265,19 +281,21 @@ export function ServicesSection() {
               </div>
             </div>
 
-            {/* Marquee watermark overlay */}
-            <div className="absolute bottom-0 right-0 overflow-hidden whitespace-nowrap pointer-events-none w-full mix-blend-overlay opacity-[0.07]">
-              <div
-                className="inline-block font-black text-7xl md:text-8xl tracking-tighter animate-marquee"
-                style={{
-                  fontFamily: "var(--font-space-grotesk)",
-                  color: "var(--color-md-on-surface)",
-                }}
-              >
-                CREATIVE. TECHNICAL. PRECISION.&nbsp;&nbsp;
-                CREATIVE. TECHNICAL. PRECISION.&nbsp;&nbsp;
+            {/* Marquee watermark overlay — skipped on touch devices */}
+            {!touch && (
+              <div className="absolute bottom-0 right-0 overflow-hidden whitespace-nowrap pointer-events-none w-full mix-blend-overlay opacity-[0.07]">
+                <div
+                  className="inline-block font-black text-7xl md:text-8xl tracking-tighter animate-marquee"
+                  style={{
+                    fontFamily: "var(--font-space-grotesk)",
+                    color: "var(--color-md-on-surface)",
+                  }}
+                >
+                  CREATIVE. TECHNICAL. PRECISION.&nbsp;&nbsp;
+                  CREATIVE. TECHNICAL. PRECISION.&nbsp;&nbsp;
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

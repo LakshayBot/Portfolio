@@ -3,6 +3,14 @@
 import { motion, useTransform, type MotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
 
+function isTouchDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0
+  );
+}
+
 export interface SvgFollowScrollProps {
   pathD: string;
   viewBox: string;
@@ -27,22 +35,27 @@ export function SvgFollowScroll({
   pathLengthRange = [0, 1],
 }: SvgFollowScrollProps) {
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [touch, setTouch] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReducedMotion(mq.matches);
     update();
     mq.addEventListener("change", update);
+    setTouch(isTouchDevice());
     return () => mq.removeEventListener("change", update);
   }, []);
 
+  // On touch devices, render the path fully drawn (no scroll-driven animation)
+  // to avoid the per-frame useTransform overhead
   const pathLength = useTransform(
     scrollYProgress,
     [0, 1],
-    reducedMotion ? [1, 1] : pathLengthRange,
+    reducedMotion || touch ? [1, 1] : pathLengthRange,
   );
 
   const filterId = `svg-blur-${blurAmount}-${strokeColor.replace("#", "")}`;
+  const showGlow = !reducedMotion && !touch;
 
   return (
     <svg
@@ -55,14 +68,16 @@ export function SvgFollowScroll({
       preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"
     >
-      <defs>
-        <filter id={filterId}>
-          <feGaussianBlur in="SourceGraphic" stdDeviation={blurAmount} />
-        </filter>
-      </defs>
+      {showGlow && (
+        <defs>
+          <filter id={filterId}>
+            <feGaussianBlur in="SourceGraphic" stdDeviation={blurAmount} />
+          </filter>
+        </defs>
+      )}
 
-      {/* Glow background path */}
-      {!reducedMotion && (
+      {/* Glow background path — skipped on touch devices */}
+      {showGlow && (
         <motion.path
           d={pathD}
           stroke={strokeColor}

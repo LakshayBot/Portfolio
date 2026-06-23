@@ -7,6 +7,14 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function isTouchDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0
+  );
+}
+
 function cx(...parts: Array<string | undefined | false | null>): string {
   return parts.filter(Boolean).join(" ");
 }
@@ -33,7 +41,6 @@ export const FlowSection: React.FC<FlowSectionProps> = ({
       data-flow-inner
       className={cx(
         "flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-6 px-[4vw] pt-[clamp(2rem,8vw,4vw)] pb-[4vw]",
-        "will-change-transform",
       )}
       style={{ transformOrigin: "bottom left", ...style }}
     >
@@ -57,18 +64,21 @@ const FlowArt: React.FC<FlowArtProps> = ({
 }) => {
   const containerRef = useRef<HTMLElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [touch, setTouch] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReducedMotion(mq.matches);
     update();
     mq.addEventListener("change", update);
+    setTouch(isTouchDevice());
     return () => mq.removeEventListener("change", update);
   }, []);
 
   useGSAP(
     () => {
-      if (!containerRef.current || reducedMotion) return;
+      // ── Skip all GSAP pin/scrub animations on touch devices ──
+      if (!containerRef.current || reducedMotion || touch) return;
 
       const sections = Array.from(
         containerRef.current.querySelectorAll<HTMLElement>("[data-flow-section]"),
@@ -117,7 +127,7 @@ const FlowArt: React.FC<FlowArtProps> = ({
         triggers.forEach((t) => t.kill());
       };
     },
-    { scope: containerRef, dependencies: [childCount(children), reducedMotion] },
+    { scope: containerRef, dependencies: [childCount(children), reducedMotion, touch] },
   );
 
   return (

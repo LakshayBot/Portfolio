@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import {
   motion,
   useMotionValue,
@@ -11,13 +11,47 @@ import {
 const GRID_SIZE = 40;
 const SPEED = 0.3;
 
+function isTouchDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0
+  );
+}
+
 function GridPattern({
   offsetX,
   offsetY,
+  animate,
 }: {
   offsetX: ReturnType<typeof useMotionValue<number>>;
   offsetY: ReturnType<typeof useMotionValue<number>>;
+  animate: boolean;
 }) {
+  if (!animate) {
+    // Static pattern — no motion values, no RAF overhead
+    return (
+      <svg className="w-full h-full" aria-hidden="true">
+        <defs>
+          <pattern
+            id="grid-bg-pattern-static"
+            width={GRID_SIZE}
+            height={GRID_SIZE}
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d={`M ${GRID_SIZE} 0 L 0 0 0 ${GRID_SIZE}`}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1"
+            />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid-bg-pattern-static)" />
+      </svg>
+    );
+  }
+
   return (
     <svg className="w-full h-full" aria-hidden="true">
       <defs>
@@ -47,9 +81,15 @@ export function GridBackground() {
   const mouseY = useMotionValue(-999);
   const gridOffsetX = useMotionValue(0);
   const gridOffsetY = useMotionValue(0);
+  const [touch, setTouch] = useState(false);
 
-  // Track global mouse position via window event
   useEffect(() => {
+    setTouch(isTouchDevice());
+  }, []);
+
+  // Track global mouse position via window event (desktop only)
+  useEffect(() => {
+    if (touch) return;
     const onMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -64,10 +104,11 @@ export function GridBackground() {
       window.removeEventListener("mousemove", onMove);
       document.documentElement.removeEventListener("mouseleave", onLeave);
     };
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, touch]);
 
-  // Animate the grid scrolling
+  // Animate the grid scrolling (desktop only; skipped on touch devices)
   useAnimationFrame(() => {
+    if (touch) return;
     gridOffsetX.set((gridOffsetX.get() + SPEED) % GRID_SIZE);
     gridOffsetY.set((gridOffsetY.get() + SPEED) % GRID_SIZE);
   });
@@ -82,23 +123,33 @@ export function GridBackground() {
       {/* Base grid — always visible, very faint */}
       <div
         className="absolute inset-0"
-        style={{ color: "var(--color-md-on-surface)", opacity: 0.04 }}
+        style={{ color: "var(--color-md-on-surface)", opacity: touch ? 0.02 : 0.04 }}
       >
-        <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} />
+        <GridPattern
+          offsetX={gridOffsetX}
+          offsetY={gridOffsetY}
+          animate={!touch}
+        />
       </div>
 
-      {/* Flashlight grid — revealed on cursor hover, green-tinted */}
-      <motion.div
-        className="absolute inset-0"
-        style={{
-          maskImage,
-          WebkitMaskImage: maskImage,
-          color: "var(--color-md-primary)",
-          opacity: 0.22,
-        }}
-      >
-        <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} />
-      </motion.div>
+      {/* Flashlight grid — revealed on cursor hover, green-tinted (desktop only) */}
+      {!touch && (
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            maskImage,
+            WebkitMaskImage: maskImage,
+            color: "var(--color-md-primary)",
+            opacity: 0.22,
+          }}
+        >
+          <GridPattern
+            offsetX={gridOffsetX}
+            offsetY={gridOffsetY}
+            animate
+          />
+        </motion.div>
+      )}
     </div>
   );
 }

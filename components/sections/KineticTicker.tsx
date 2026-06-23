@@ -183,7 +183,10 @@ export function KineticTicker() {
     >
       <div className="flex flex-col gap-3">
         <TickerRow items={ROW_1} speed={40} />
-        <TickerRow items={ROW_2} reverse speed={35} />
+        {/* On small screens, hide the second row to halve animating nodes */}
+        <div className="hidden sm:block">
+          <TickerRow items={ROW_2} reverse speed={35} />
+        </div>
       </div>
     </div>
   );
