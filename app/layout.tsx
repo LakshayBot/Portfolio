@@ -56,7 +56,8 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
       <head>
-        {/* Material Symbols variable icon font */}
+        {/* Material Symbols — subsetted to only the 10 icons used across the site.
+            Avoids loading all 2,500+ glyphs (3,864 KiB → ~30 KiB). */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -64,7 +65,14 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+          href={
+            "https://fonts.googleapis.com/css2" +
+            "?family=Material+Symbols+Outlined" +
+            ":opsz,wght,FILL@20..48,100..700,0..1" +
+            "&icon_names=expand_more,architecture,dynamic_form,database" +
+            ",precision_manufacturing,mail,error,warning,arrow_back,description" +
+            "&display=swap"
+          }
           rel="stylesheet"
         />
         {/* JSON-LD structured data for rich search results */}
