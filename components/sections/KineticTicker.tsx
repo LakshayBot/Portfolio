@@ -1,11 +1,13 @@
-import * as React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 
 // ── Tech stack items with brand colours ──────────────────────────────
 
 interface TechItem {
   name: string;
-  color: string;      // brand accent colour
-  bg: string;         // subtle tinted background
+  color: string;
+  bg: string;
   icon: React.ReactNode;
 }
 
@@ -123,12 +125,11 @@ const ROW_2: TechItem[] = [
 function Pill({ item }: { item: TechItem }) {
   return (
     <span
-      className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap shrink-0"
+      className="ticker-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap shrink-0"
       style={{
         backgroundColor: item.bg,
         border: `1px solid ${item.color}22`,
         color: item.color,
-        fontFamily: "var(--font-space-grotesk)",
       }}
     >
       {item.icon}
@@ -173,6 +174,16 @@ function TickerRow({
 // ── Main component ────────────────────────────────────────────────────
 
 export function KineticTicker() {
+  const [showSecondRow, setShowSecondRow] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 640px)");
+    setShowSecondRow(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setShowSecondRow(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
   return (
     <div
       className="w-full py-8 select-none"
@@ -183,10 +194,7 @@ export function KineticTicker() {
     >
       <div className="flex flex-col gap-3">
         <TickerRow items={ROW_1} speed={40} />
-        {/* On small screens, hide the second row to halve animating nodes */}
-        <div className="hidden sm:block">
-          <TickerRow items={ROW_2} reverse speed={35} />
-        </div>
+        {showSecondRow && <TickerRow items={ROW_2} reverse speed={35} />}
       </div>
     </div>
   );

@@ -295,7 +295,7 @@
 .animate-marquee {
   animation: marquee 30s linear infinite;
   will-change: transform;
-  contain: layout style;
+  contain: layout style paint;
 }
 
 @keyframes marquee-reverse {
@@ -305,7 +305,12 @@
 .animate-marquee-reverse {
   animation: marquee-reverse 30s linear infinite;
   will-change: transform;
-  contain: layout style;
+  contain: layout style paint;
+}
+
+/* ─── Kinetic ticker pill ──────────────────────────────────────────── */
+.ticker-pill {
+  font-family: var(--font-space-grotesk);
 }
 
 /* ─── 3D perspective for contact flip card ──────────────────────────── */

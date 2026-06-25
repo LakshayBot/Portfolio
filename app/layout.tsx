@@ -64,6 +64,7 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* Material Symbols — loaded non-blocking via media=print swap trick */}
         <link
           href={
             "https://fonts.googleapis.com/css2" +
@@ -74,6 +75,13 @@ export default function RootLayout({
             "&display=swap"
           }
           rel="stylesheet"
+          media="print"
+          suppressHydrationWarning
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.querySelector('link[media="print"][href*="Material+Symbols"]').onload=function(){this.media="all";this.onload=null}`,
+          }}
         />
         {/* JSON-LD structured data for rich search results */}
         <script
