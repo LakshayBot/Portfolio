@@ -114,7 +114,7 @@ const ROW_2: TechItem[] = [
   { name: "LangChain",   color: "#1C3C3C", bg: "rgba(28,60,60,0.08)",    icon: icons.langchain },
   { name: "MongoDB",     color: "#47A248", bg: "rgba(71,162,72,0.08)",   icon: icons.mongodb },
   { name: "FastAPI",     color: "#009688", bg: "rgba(0,150,136,0.08)",   icon: icons.python },
-  { name: "LangGraph",   color: "#59ee50", bg: "rgba(89,238,80,0.08)",   icon: icons.langchain },
+  { name: "LangGraph",   color: "#CCFF00", bg: "rgba(204,255,0,0.08)",   icon: icons.langchain },
   { name: "EF Core",     color: "#512BD4", bg: "rgba(81,43,212,0.08)",   icon: icons.dotnet },
 ];
 

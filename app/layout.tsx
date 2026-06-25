@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Hanken_Grotesk, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { GridBackground } from "@/components/layout/GridBackground";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { siteConfig } from "@/data/site-config";
 
-const inter = Inter({
-  variable: "--font-inter",
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken-grotesk",
   subsets: ["latin"],
   display: "swap",
 });
@@ -53,7 +53,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable}`}
+      className={`${hankenGrotesk.variable} ${spaceGrotesk.variable}`}
     >
       <head>
         {/* Material Symbols — subsetted to only the 10 icons used across the site.
@@ -97,7 +97,7 @@ export default function RootLayout({
       <body className="min-h-screen antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem={false}
           disableTransitionOnChange
         >

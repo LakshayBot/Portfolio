@@ -4,12 +4,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ─── All tokens declared here for Tailwind v4 @theme ──────────────── */
+/* ─── Static design tokens (never change between modes) ────────────────── */
 @theme inline {
-  /* shadcn base (kept for shadcn component internals) */
+  /* shadcn base */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-body);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -43,158 +43,217 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* ── Material Design custom color tokens ── */
-  --color-md-primary:                    #006b0a;
-  --color-md-primary-fixed:              #59ee50;
-  --color-md-primary-fixed-dim:          #49e043;
-  --color-md-primary-dim:                #005d07;
-  --color-md-primary-container:          #59ee50;
-  --color-md-on-primary:                 #d2ffc4;
-  --color-md-on-primary-container:       #005406;
-  --color-md-on-primary-fixed:           #003e03;
-  --color-md-on-primary-fixed-variant:   #005f07;
-  --color-md-inverse-primary:            #59ee50;
-
-  --color-md-secondary:                  #5c5b5b;
-  --color-md-secondary-dim:              #504f4f;
-  --color-md-secondary-fixed:            #e5e2e1;
-  --color-md-secondary-fixed-dim:        #d6d4d3;
-  --color-md-secondary-container:        #e5e2e1;
-  --color-md-on-secondary:               #f5f2f1;
-  --color-md-on-secondary-container:     #525151;
-  --color-md-on-secondary-fixed:         #403f3f;
-  --color-md-on-secondary-fixed-variant: #5c5b5b;
-
-  --color-md-tertiary:                   #6a5b00;
-  --color-md-tertiary-dim:               #5c4f00;
-  --color-md-tertiary-fixed:             #fce047;
-  --color-md-tertiary-fixed-dim:         #edd13a;
-  --color-md-tertiary-container:         #fce047;
-  --color-md-on-tertiary:                #fff3c4;
-  --color-md-on-tertiary-container:      #5d5000;
-  --color-md-on-tertiary-fixed:          #483d00;
-  --color-md-on-tertiary-fixed-variant:  #685900;
-
-  --color-md-surface:                    #f5f6f7;
-  --color-md-surface-dim:                #d1d5d7;
-  --color-md-surface-bright:             #f5f6f7;
-  --color-md-surface-variant:            #dadddf;
-  --color-md-surface-tint:               #006b0a;
-  --color-md-surface-container-lowest:   #ffffff;
-  --color-md-surface-container-low:      #eff1f2;
-  --color-md-surface-container:          #e6e8ea;
-  --color-md-surface-container-high:     #e0e3e4;
-  --color-md-surface-container-highest:  #dadddf;
-  --color-md-on-surface:                 #2c2f30;
-  --color-md-on-surface-variant:         #595c5d;
-  --color-md-inverse-surface:            #0c0f10;
-  --color-md-inverse-on-surface:         #9b9d9e;
-
-  --color-md-background:                 #f5f6f7;
-  --color-md-on-background:              #2c2f30;
-
-  --color-md-outline:                    #757778;
-  --color-md-outline-variant:            #abadae;
-
-  --color-md-error:                      #b02500;
-  --color-md-error-dim:                  #b92902;
-  --color-md-error-container:            #f95630;
-  --color-md-on-error:                   #ffefec;
-  --color-md-on-error-container:         #520c00;
-
-  /* ── Fonts ── */
+  /* Typography */
   --font-headline: var(--font-space-grotesk);
-  --font-body:     var(--font-inter);
+  --font-body:     var(--font-hanken-grotesk);
   --font-label:    var(--font-space-grotesk);
 }
 
-/* ─── shadcn CSS variable overrides (light) ─────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — High-Contrast Modernist
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 :root {
-  --background: #f5f6f7;
-  --foreground: #2c2f30;
+  /* ── Material Design color tokens ── */
+  --color-md-primary:                    #506600;
+  --color-md-primary-fixed:              #c3f400;
+  --color-md-primary-fixed-dim:          #abd600;
+  --color-md-primary-dim:                #3c4d00;
+  --color-md-primary-container:          #ccff00;
+  --color-md-on-primary:                 #ffffff;
+  --color-md-on-primary-container:       #5b7300;
+  --color-md-on-primary-fixed:           #161e00;
+  --color-md-on-primary-fixed-variant:   #3c4d00;
+  --color-md-inverse-primary:            #abd600;
+
+  --color-md-secondary:                  #5f5e5e;
+  --color-md-secondary-dim:              #474646;
+  --color-md-secondary-fixed:            #e5e2e1;
+  --color-md-secondary-fixed-dim:        #c8c6c5;
+  --color-md-secondary-container:        #e5e2e1;
+  --color-md-on-secondary:               #ffffff;
+  --color-md-on-secondary-container:     #656464;
+  --color-md-on-secondary-fixed:         #1c1b1b;
+  --color-md-on-secondary-fixed-variant: #474646;
+
+  --color-md-tertiary:                   #4f616e;
+  --color-md-tertiary-dim:               #374956;
+  --color-md-tertiary-fixed:             #d2e5f5;
+  --color-md-tertiary-fixed-dim:         #b6c9d8;
+  --color-md-tertiary-container:         #dcefff;
+  --color-md-on-tertiary:                #ffffff;
+  --color-md-on-tertiary-container:      #5b6d7a;
+  --color-md-on-tertiary-fixed:          #0b1d29;
+  --color-md-on-tertiary-fixed-variant:  #374956;
+
+  --color-md-surface:                    #f9f9f9;
+  --color-md-surface-dim:                #dadada;
+  --color-md-surface-bright:             #f9f9f9;
+  --color-md-surface-variant:            #e2e2e2;
+  --color-md-surface-tint:               #506600;
+  --color-md-surface-container-lowest:   #ffffff;
+  --color-md-surface-container-low:      #f3f3f3;
+  --color-md-surface-container:          #eeeeee;
+  --color-md-surface-container-high:     #e8e8e8;
+  --color-md-surface-container-highest:  #e2e2e2;
+  --color-md-on-surface:                 #1a1c1c;
+  --color-md-on-surface-variant:         #444933;
+  --color-md-inverse-surface:            #2f3131;
+  --color-md-inverse-on-surface:         #f1f1f1;
+
+  --color-md-background:                 #f9f9f9;
+  --color-md-on-background:              #1a1c1c;
+
+  --color-md-outline:                    #747a60;
+  --color-md-outline-variant:            #c4c9ac;
+
+  --color-md-error:                      #ba1a1a;
+  --color-md-error-dim:                  #93000a;
+  --color-md-error-container:            #ffdad6;
+  --color-md-on-error:                   #ffffff;
+  --color-md-on-error-container:         #93000a;
+
+  /* ── Accent aliases ── */
+  --color-acid-lime:      #CCFF00;
+  --color-bone-white:     #1a1c1c;   /* dark text in light mode */
+  --color-deep-obsidian:  #ffffff;   /* card surfaces */
+  --color-charcoal:       #e2e2e2;   /* section surfaces */
+  --color-bg-dark:        #f9f9f9;   /* base background */
+
+  /* ── shadcn CSS variables ── */
+  --background: #f9f9f9;
+  --foreground: #1a1c1c;
   --card: #ffffff;
-  --card-foreground: #2c2f30;
+  --card-foreground: #1a1c1c;
   --popover: #ffffff;
-  --popover-foreground: #2c2f30;
-  --primary: #006b0a;
-  --primary-foreground: #d2ffc4;
+  --popover-foreground: #1a1c1c;
+  --primary: #ccff00;
+  --primary-foreground: #161e00;
   --secondary: #e5e2e1;
-  --secondary-foreground: #525151;
-  --muted: #e6e8ea;
-  --muted-foreground: #595c5d;
-  --accent: #eff1f2;
-  --accent-foreground: #2c2f30;
-  --destructive: #b02500;
-  --border: #abadae;
-  --input: #abadae;
-  --ring: #006b0a;
-  --radius: 0.25rem;
-  --sidebar: #eff1f2;
-  --sidebar-foreground: #2c2f30;
-  --sidebar-primary: #006b0a;
-  --sidebar-primary-foreground: #d2ffc4;
-  --sidebar-accent: #e6e8ea;
-  --sidebar-accent-foreground: #2c2f30;
-  --sidebar-border: #abadae;
-  --sidebar-ring: #006b0a;
+  --secondary-foreground: #656464;
+  --muted: #f3f3f3;
+  --muted-foreground: #444933;
+  --accent: #e8e8e8;
+  --accent-foreground: #1a1c1c;
+  --destructive: #ba1a1a;
+  --border: #c4c9ac;
+  --input: #c4c9ac;
+  --ring: #ccff00;
+  --radius: 0rem;
+  --sidebar: #f9f9f9;
+  --sidebar-foreground: #1a1c1c;
+  --sidebar-primary: #ccff00;
+  --sidebar-primary-foreground: #161e00;
+  --sidebar-accent: #e8e8e8;
+  --sidebar-accent-foreground: #1a1c1c;
+  --sidebar-border: #c4c9ac;
+  --sidebar-ring: #ccff00;
 }
 
-.dark {
-  --background: #0c0f10;
-  --foreground: #e6e8ea;
-  --card: #1a1d1e;
-  --card-foreground: #e6e8ea;
-  --popover: #1a1d1e;
-  --popover-foreground: #e6e8ea;
-  --primary: #59ee50;
-  --primary-foreground: #003e03;
-  --secondary: #2a2d2e;
-  --secondary-foreground: #e6e8ea;
-  --muted: #2a2d2e;
-  --muted-foreground: #9b9d9e;
-  --accent: #2a2d2e;
-  --accent-foreground: #e6e8ea;
-  --destructive: #f95630;
-  --border: #2a2d2e;
-  --input: #2a2d2e;
-  --ring: #59ee50;
-  --sidebar: #1a1d1e;
-  --sidebar-foreground: #e6e8ea;
-  --sidebar-primary: #59ee50;
-  --sidebar-primary-foreground: #003e03;
-  --sidebar-accent: #2a2d2e;
-  --sidebar-accent-foreground: #e6e8ea;
-  --sidebar-border: #2a2d2e;
-  --sidebar-ring: #59ee50;
-}
+/* ═══════════════════════════════════════════════════════════════════════════
+   DARK MODE — Acid Portfolio
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ─── Dark mode Material token overrides ────────────────────────────── */
 .dark {
-  --color-md-primary:                    #59ee50;
-  --color-md-primary-fixed:              #49e043;
-  --color-md-primary-fixed-dim:          #3ecf38;
-  --color-md-primary-dim:                #49e043;
-  --color-md-primary-container:          #005d07;
-  --color-md-on-primary:                 #003e03;
-  --color-md-on-primary-container:       #59ee50;
+  /* ── Material Design color tokens ── */
+  --color-md-primary:                    #ffffff;
+  --color-md-primary-fixed:              #c3f400;
+  --color-md-primary-fixed-dim:          #abd600;
+  --color-md-primary-dim:                #506600;
+  --color-md-primary-container:          #c3f400;
+  --color-md-on-primary:                 #283500;
+  --color-md-on-primary-container:       #556d00;
+  --color-md-on-primary-fixed:           #161e00;
+  --color-md-on-primary-fixed-variant:   #3c4d00;
+  --color-md-inverse-primary:            #506600;
+
+  --color-md-secondary:                  #cac6be;
+  --color-md-secondary-dim:              #504f4f;
+  --color-md-secondary-fixed:            #e6e2d9;
+  --color-md-secondary-fixed-dim:        #cac6be;
+  --color-md-secondary-container:        #484740;
+  --color-md-on-secondary:               #31302b;
+  --color-md-on-secondary-container:     #b8b5ad;
+  --color-md-on-secondary-fixed:         #1c1c16;
+  --color-md-on-secondary-fixed-variant: #484740;
+
+  --color-md-tertiary:                   #ffffff;
+  --color-md-tertiary-dim:               #5c4f00;
+  --color-md-tertiary-fixed:             #e4e2e1;
+  --color-md-tertiary-fixed-dim:         #c8c6c5;
+  --color-md-tertiary-container:         #e4e2e1;
+  --color-md-on-tertiary:                #303030;
+  --color-md-on-tertiary-container:      #656464;
+  --color-md-on-tertiary-fixed:          #1b1c1c;
+  --color-md-on-tertiary-fixed-variant:  #474746;
+
   --color-md-surface:                    #0c0f10;
   --color-md-surface-dim:                #0c0f10;
-  --color-md-surface-bright:             #323537;
-  --color-md-surface-variant:            #3a3d3e;
-  --color-md-surface-container-lowest:   #070a0b;
-  --color-md-surface-container-low:      #1a1d1e;
-  --color-md-surface-container:          #1e2122;
-  --color-md-surface-container-high:     #282b2c;
-  --color-md-surface-container-highest:  #333637;
-  --color-md-on-surface:                 #e0e3e4;
-  --color-md-on-surface-variant:         #bec2c3;
-  --color-md-inverse-surface:            #e0e3e4;
-  --color-md-inverse-on-surface:         #2c2f30;
+  --color-md-surface-bright:             #393939;
+  --color-md-surface-variant:            #353534;
+  --color-md-surface-tint:               #abd600;
+  --color-md-surface-container-lowest:   #0e0e0e;
+  --color-md-surface-container-low:      #1c1b1b;
+  --color-md-surface-container:          #201f1f;
+  --color-md-surface-container-high:     #2a2a2a;
+  --color-md-surface-container-highest:  #353534;
+  --color-md-on-surface:                 #e5e2e1;
+  --color-md-on-surface-variant:         #c4c9ac;
+  --color-md-inverse-surface:            #e5e2e1;
+  --color-md-inverse-on-surface:         #313030;
+
   --color-md-background:                 #0c0f10;
-  --color-md-on-background:              #e0e3e4;
-  --color-md-outline:                    #888b8c;
-  --color-md-outline-variant:            #3a3d3e;
+  --color-md-on-background:              #e5e2e1;
+
+  --color-md-outline:                    #8e9379;
+  --color-md-outline-variant:            #444933;
+
+  --color-md-error:                      #ffb4ab;
+  --color-md-error-dim:                  #b92902;
+  --color-md-error-container:            #93000a;
+  --color-md-on-error:                   #690005;
+  --color-md-on-error-container:         #ffdad6;
+
+  /* ── Accent aliases ── */
+  --color-acid-lime:      #CCFF00;
+  --color-bone-white:     #ECE8DF;
+  --color-deep-obsidian:  #141414;
+  --color-charcoal:       #252525;
+  --color-bg-dark:        #0c0f10;
+
+  /* ── shadcn CSS variables ── */
+  --background: #0c0f10;
+  --foreground: #e5e2e1;
+  --card: #1c1b1b;
+  --card-foreground: #e5e2e1;
+  --popover: #1c1b1b;
+  --popover-foreground: #e5e2e1;
+  --primary: #c3f400;
+  --primary-foreground: #161e00;
+  --secondary: #484740;
+  --secondary-foreground: #b8b5ad;
+  --muted: #201f1f;
+  --muted-foreground: #c4c9ac;
+  --accent: #2a2a2a;
+  --accent-foreground: #e5e2e1;
+  --destructive: #ffb4ab;
+  --border: #444933;
+  --input: #444933;
+  --ring: #c3f400;
+  --radius: 0.25rem;
+  --sidebar: #1c1b1b;
+  --sidebar-foreground: #e5e2e1;
+  --sidebar-primary: #c3f400;
+  --sidebar-primary-foreground: #161e00;
+  --sidebar-accent: #2a2a2a;
+  --sidebar-accent-foreground: #e5e2e1;
+  --sidebar-border: #444933;
+  --sidebar-ring: #c3f400;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
 
 @layer base {
   * {
@@ -202,10 +261,9 @@
   }
   html {
     @apply font-sans;
-    /* scroll-behavior handled by Lenis smooth scroll */
   }
   body {
-    background-color: var(--color-md-background);
+    background-color: var(--color-bg-dark);
     color: var(--color-md-on-surface);
     font-family: var(--font-body), sans-serif;
   }
@@ -218,7 +276,7 @@
 
 /* ─── Kinetic text (hollow stroke) ───────────────────────────────────── */
 .kinetic-text {
-  -webkit-text-stroke: 1px rgba(0, 107, 10, 0.1);
+  -webkit-text-stroke: 1px rgba(195, 244, 0, 0.15);
   color: transparent;
 }
 
@@ -250,41 +308,76 @@
   contain: layout style;
 }
 
+/* ─── 3D perspective for contact flip card ──────────────────────────── */
+.perspective-container {
+  perspective: 1200px;
+}
+
 /* ─── Selection colors ───────────────────────────────────────────────── */
 ::selection {
-  background-color: var(--color-md-primary-container);
-  color: var(--color-md-on-primary-container);
+  background-color: var(--color-acid-lime);
+  color: #161e00;
 }
 
 /* ─── Hero CTA buttons ───────────────────────────────────────────────── */
 .hero-btn-primary {
   font-family: var(--font-space-grotesk), sans-serif;
-  background-color: #CCFF00;
+  background-color: var(--color-md-primary-fixed);
   color: var(--color-md-on-primary-fixed);
 }
 .hero-btn-primary:hover {
-  box-shadow: 0 0 0 2px #CCFF00, 0 0 0 4px var(--color-md-background);
+  box-shadow: 0 0 0 2px var(--color-md-primary-fixed), 0 0 0 4px var(--color-bg-dark);
 }
 
 .hero-btn-secondary {
   font-family: var(--font-space-grotesk), sans-serif;
-  color: var(--color-md-on-surface);
-  border-color: var(--color-md-outline-variant);
+  color: var(--color-bone-white);
+  border-color: color-mix(in srgb, var(--color-md-on-surface) 10%, transparent);
 }
 .hero-btn-secondary:hover {
-  color: var(--color-md-primary);
-  border-color: var(--color-md-primary);
+  color: var(--color-acid-lime);
+  border-color: var(--color-acid-lime);
 }
 
 /* ─── Skills bento cards ─────────────────────────────────────────────── */
 .skill-card {
-  background-color: var(--color-md-surface-container-low);
+  background-color: color-mix(in srgb, var(--color-md-on-surface) 3%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-md-on-surface) 6%, transparent);
 }
 .skill-card:hover {
-  background-color: var(--color-md-surface-container-highest);
+  background-color: color-mix(in srgb, var(--color-acid-lime) 4%, transparent);
+  border-color: color-mix(in srgb, var(--color-acid-lime) 15%, transparent);
 }
 
-/* ─── Anchor scroll offset (fixed navbar compensation) ──────────────── */
+/* ─── Footer links ───────────────────────────────────────────────────── */
+.footer-link {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+.footer-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-acid-lime);
+  transition: width 0.3s ease;
+}
+.footer-link:hover {
+  color: var(--color-acid-lime);
+}
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* Watermark hover */
+.footer-watermark:hover {
+  color: var(--color-acid-lime) !important;
+}
+
+/* ─── Anchor scroll offset (fixed navbar compensation) ───────────────── */
 #projects,
 #services,
 #contact,
@@ -293,10 +386,6 @@
 }
 
 /* ─── Mobile performance: defer off-screen section rendering ─────────── */
-/* NOTE: content-visibility:auto breaks scroll-driven animations (Framer
-   Motion useScroll, GSAP ScrollTrigger, SVG follow-scroll paths) because
-   the browser reports wrong element dimensions for skipped content.
-   Instead, use lighter containment on individual paint-heavy children. */
 @media (max-width: 1023px) {
   #services,
   #skills,
@@ -305,7 +394,7 @@
   }
 }
 
-/* ─── Project carousel progress bar ─────────────────────────────────── */
+/* ─── Project carousel progress bar ──────────────────────────────────── */
 @keyframes progress-fill {
   from { width: 0%; }
   to   { width: 100%; }
@@ -317,7 +406,13 @@
   animation-play-state: paused;
 }
 
-/* ─── Reduced motion ────────────────────────────────────────────────── */
+/* ─── Terminal cursor blink ──────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-marquee-reverse {

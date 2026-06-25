@@ -139,8 +139,8 @@ export function GridBackground() {
           style={{
             maskImage,
             WebkitMaskImage: maskImage,
-            color: "var(--color-md-primary)",
-            opacity: 0.22,
+            color: "var(--color-md-primary-fixed)",
+            opacity: 0.18,
           }}
         >
           <GridPattern

@@ -16,16 +16,19 @@ function LivePreview({ url, accentBg }: { url: string; accentBg: string }) {
 
   return (
     <div
-      className="w-full rounded-2xl overflow-hidden"
+      className="w-full overflow-hidden"
       style={{
-        background: "#111418",
-        border: "1px solid rgba(255,255,255,0.09)",
+        background: "var(--color-deep-obsidian)",
+        border: "1px solid color-mix(in srgb, var(--color-md-on-surface) 9%, transparent)",
         aspectRatio: "16 / 10",
+        borderRadius: "0px",
       }}
     >
       <div
         className="flex items-center gap-1.5 px-4 py-3"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        style={{
+          borderBottom: "1px solid color-mix(in srgb, var(--color-md-on-surface) 6%, transparent)",
+        }}
       >
         <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#ff5f57" }} />
         <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#febc2e" }} />
@@ -33,8 +36,8 @@ function LivePreview({ url, accentBg }: { url: string; accentBg: string }) {
         <div
           className="ml-3 rounded px-3 py-0.5 text-[10px] truncate"
           style={{
-            backgroundColor: "rgba(255,255,255,0.05)",
-            color: "rgba(255,255,255,0.25)",
+            backgroundColor: "color-mix(in srgb, var(--color-md-on-surface) 5%, transparent)",
+            color: "color-mix(in srgb, var(--color-md-on-surface) 25%, transparent)",
           }}
         >
           {url}
@@ -55,21 +58,31 @@ function LivePreview({ url, accentBg }: { url: string; accentBg: string }) {
         {(status === "loading" || status === "failed") && (
           <div className="absolute inset-0 flex flex-col justify-center p-5 space-y-3">
             <div className="flex justify-between items-center mb-4">
-              <div className="h-3 w-24 rounded-full" style={{ backgroundColor: `${accentBg}0.3)` }} />
-              <div className="h-3 w-32 rounded-full" style={{ backgroundColor: "rgba(255,255,255,0.06)" }} />
+              <div
+                className="h-3 w-24"
+                style={{ backgroundColor: `${accentBg}0.3)` }}
+              />
+              <div
+                className="h-3 w-32"
+                style={{
+                  backgroundColor: "color-mix(in srgb, var(--color-md-on-surface) 6%, transparent)",
+                }}
+              />
             </div>
             <div
-              className="h-28 rounded-xl"
+              className="h-28"
               style={{
-                background: `linear-gradient(135deg, ${accentBg}0.1) 0%, rgba(255,255,255,0.03) 100%)`,
+                background: `linear-gradient(135deg, ${accentBg}0.1) 0%, color-mix(in srgb, var(--color-md-on-surface) 3%, transparent) 100%)`,
               }}
             />
             <div className="grid grid-cols-3 gap-2 pt-1">
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="h-16 rounded-lg"
-                  style={{ backgroundColor: "rgba(255,255,255,0.04)" }}
+                  className="h-16"
+                  style={{
+                    backgroundColor: "color-mix(in srgb, var(--color-md-on-surface) 4%, transparent)",
+                  }}
                 />
               ))}
             </div>
@@ -85,7 +98,7 @@ function ProjectSlide({ project, index }: { project: Project; index: number }) {
     <FlowSection
       aria-label={project.title}
       style={{
-        backgroundColor: "#0c0f10",
+        backgroundColor: "var(--color-bg-dark)",
       }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center flex-1 max-w-7xl mx-auto w-full">
@@ -94,7 +107,7 @@ function ProjectSlide({ project, index }: { project: Project; index: number }) {
             className="font-mono font-bold tabular-nums"
             style={{
               fontSize: "clamp(3rem, 8vw, 6rem)",
-              color: "rgba(255,255,255,0.06)",
+              color: "color-mix(in srgb, var(--color-md-on-surface) 6%, transparent)",
               fontFamily: "var(--font-space-grotesk)",
               lineHeight: 1,
               display: "block",
@@ -108,7 +121,7 @@ function ProjectSlide({ project, index }: { project: Project; index: number }) {
             style={{
               fontFamily: "var(--font-space-grotesk)",
               fontSize: "clamp(2rem, 4vw, 3.5rem)",
-              color: "#ffffff",
+              color: "var(--color-md-on-surface)",
             }}
           >
             {project.title}
@@ -146,7 +159,7 @@ function ProjectSlide({ project, index }: { project: Project; index: number }) {
               <p
                 key={i}
                 className="text-sm leading-[1.85]"
-                style={{ color: "rgba(255,255,255,0.5)" }}
+                style={{ color: "var(--color-md-on-surface-variant)" }}
               >
                 {para}
               </p>
@@ -189,17 +202,24 @@ export function ProjectsSection() {
     <div
       id="projects"
       style={{
-        backgroundColor: "#0c0f10",
+        backgroundColor: "var(--color-bg-dark)",
         marginLeft: "calc(50% - 50vw)",
         marginRight: "calc(50% - 50vw)",
       }}
     >
-      <div style={{ containerType: "inline-size", paddingLeft: "4vw", paddingRight: "4vw", paddingTop: "clamp(2rem,8vw,4vw)" }}>
+      <div
+        style={{
+          containerType: "inline-size",
+          paddingLeft: "4vw",
+          paddingRight: "4vw",
+          paddingTop: "clamp(2rem,8vw,4vw)",
+        }}
+      >
         <h2
           className="font-black leading-[0.9] tracking-tighter uppercase whitespace-nowrap"
           style={{
             fontFamily: "var(--font-space-grotesk)",
-            color: "#ffffff",
+            color: "var(--color-md-on-surface)",
             fontSize: "4.6cqw",
           }}
         >

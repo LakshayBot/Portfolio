@@ -4,9 +4,30 @@ import { useEffect, useState } from "react";
 
 function isTouchDevice(): boolean {
   if (typeof window === "undefined") return false;
+  return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+}
+
+function ChevronIcon({ open }: { open: boolean }) {
   return (
-    "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      style={{
+        flexShrink: 0,
+        transform: open ? "rotate(180deg)" : "rotate(0deg)",
+        transition: "transform 0.3s ease",
+      }}
+    >
+      <path
+        d="M5 7.5L10 12.5L15 7.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -15,25 +36,25 @@ const services = [
     number: 1,
     title: "Full Stack Development",
     description:
-      "End-to-end application delivery — from Next.js and React frontends to .NET 8 API gateways and Python backends, with TypeScript throughout.",
+      "Next.js and React frontends, .NET 8 API gateways, and Python backends with TypeScript end to end.",
   },
   {
     number: 2,
     title: "AI & RAG Systems",
     description:
-      "Agentic RAG pipelines, LangChain and LangGraph workflows, local LLM integration via Ollama, and semantic search with vector embeddings.",
+      "Agentic RAG pipelines, LangChain and LangGraph workflows, local LLM inference via Ollama, and semantic vector search.",
   },
   {
     number: 3,
     title: "Backend & API Architecture",
     description:
-      "Microservice design, REST API gateways, JWT and OAuth authentication, Hangfire background jobs, PostgreSQL with EF Core, and Redis caching.",
+      "Microservice design, REST API gateways, JWT and OAuth auth, Hangfire background jobs, PostgreSQL with EF Core, and Redis caching.",
   },
   {
     number: 4,
     title: "DevOps & Infrastructure",
     description:
-      "Docker Compose multi-service deployments, OpenSearch hybrid retrieval, and observability pipelines with Langfuse tracing and ClickHouse.",
+      "Docker Compose multi-service deployments, OpenSearch hybrid retrieval, and observability with Langfuse tracing and ClickHouse.",
   },
 ];
 
@@ -52,7 +73,7 @@ export function ServicesSection() {
       style={{
         marginLeft: "calc(50% - 50vw)",
         marginRight: "calc(50% - 50vw)",
-        backgroundColor: "var(--color-md-background)",
+        backgroundColor: "var(--color-bg-dark)",
         minHeight: "100dvh",
         display: "flex",
         alignItems: "center",
@@ -74,16 +95,18 @@ export function ServicesSection() {
                   fontSize: "clamp(2.5rem, 5.5vw, 5rem)",
                 }}
               >
-                What I Can Do For You
-                <span style={{ color: "var(--color-md-primary)" }}>.</span>
+                What I Can Do
+                <span style={{ color: "var(--color-md-primary-fixed)" }}>.</span>
               </h2>
               <p
                 className="text-lg md:text-xl max-w-md leading-relaxed"
-                style={{ color: "var(--color-md-on-surface-variant)" }}
+                style={{
+                  color: "var(--color-md-on-surface-variant)",
+                  fontFamily: "var(--font-space-grotesk)",
+                }}
               >
-                As a kinetic architect, I build systems that connect deeply —
-                from pixel-perfect interfaces to distributed backend
-                infrastructure.
+                I build systems end to end, from the interface down to the
+                database and everything in between.
               </p>
             </div>
 
@@ -120,26 +143,22 @@ export function ServicesSection() {
                         style={{
                           fontFamily: "var(--font-space-grotesk)",
                           color: isOpen
-                            ? "var(--color-md-primary)"
+                            ? "var(--color-md-primary-fixed)"
                             : "var(--color-md-on-surface)",
                         }}
                       >
                         {service.number}. {service.title}
                       </h3>
-                      <span
-                        className="material-symbols-outlined transition-all duration-300"
+                      <div
                         style={{
-                          fontSize: "24px",
                           color: isOpen
-                            ? "var(--color-md-primary)"
+                            ? "var(--color-md-primary-fixed)"
                             : "var(--color-md-on-surface-variant)",
-                          transform: isOpen
-                            ? "rotate(180deg)"
-                            : "rotate(0deg)",
+                          transition: "color 0.3s ease",
                         }}
                       >
-                        expand_more
-                      </span>
+                        <ChevronIcon open={isOpen} />
+                      </div>
                     </div>
 
                     {/* Expandable description */}
@@ -154,6 +173,7 @@ export function ServicesSection() {
                         className="px-4 pb-5 text-sm leading-relaxed"
                         style={{
                           color: "var(--color-md-on-surface-variant)",
+                          fontFamily: "var(--font-space-grotesk)",
                         }}
                       >
                         {service.description}
@@ -165,7 +185,7 @@ export function ServicesSection() {
             </div>
           </div>
 
-          {/* ── Right Side: Visual element ── */}
+          {/* ── Right Side: Terminal window ── */}
           <div className="w-full md:w-1/2 flex justify-center items-center relative h-[500px] md:h-[600px]">
             {/* Ambient backdrop glow */}
             <div
@@ -176,86 +196,80 @@ export function ServicesSection() {
               }}
             />
 
-            {/* Rotated card */}
+            {/* Terminal card */}
             <div
-              className="relative w-full max-w-sm aspect-[4/5] rounded-lg overflow-hidden"
+              className="relative w-full max-w-sm aspect-[4/5] rounded-xl overflow-hidden"
               style={{
-                transform: touch ? "rotate(2deg)" : "rotate(6deg)",
-                backgroundColor: "var(--color-md-surface-container)",
-                boxShadow:
-                  "0 20px 60px -15px rgba(0,0,0,0.15)",
+                transform: touch ? "rotate(2deg)" : "rotate(5deg)",
+                backgroundColor: "var(--color-bg-dark)",
+                border: "1px solid rgba(195,244,0,0.1)",
+                boxShadow: "0 20px 60px -15px rgba(0,0,0,0.4)",
                 transition: touch ? "none" : "transform 700ms ease-in-out",
               }}
               onMouseEnter={(e) => {
                 if (touch) return;
-                e.currentTarget.style.transform = "rotate(3deg)";
+                e.currentTarget.style.transform = "rotate(2deg)";
               }}
               onMouseLeave={(e) => {
                 if (touch) return;
-                e.currentTarget.style.transform = "rotate(6deg)";
+                e.currentTarget.style.transform = "rotate(5deg)";
               }}
             >
-              {/* Abstract code-window visual */}
-              <div
-                className="w-full h-full flex flex-col p-5"
-                style={{
-                  backgroundColor: "var(--color-md-surface-container-lowest)",
-                }}
-              >
-                {/* Window title bar */}
+              <div className="w-full h-full flex flex-col p-5">
+                {/* Terminal title bar */}
                 <div className="flex items-center gap-2 mb-4">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{
-                      backgroundColor: "var(--color-md-error)",
-                    }}
-                  />
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{
-                      backgroundColor: "var(--color-md-tertiary-container)",
-                    }}
-                  />
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{
-                      backgroundColor: "var(--color-md-primary-container)",
-                    }}
-                  />
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#ff5f57" }} />
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#febc2e" }} />
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#28c840" }} />
+                  <span
+                    className="ml-2 text-[10px] font-mono"
+                    style={{ color: "color-mix(in srgb, var(--color-md-on-surface) 25%, transparent)" }}
+                  >
+                    lakshay@dev: ~
+                  </span>
                 </div>
 
-                {/* Code lines */}
-                <div className="flex-1 space-y-3 overflow-hidden">
+                {/* Terminal output */}
+                <div className="flex-1 space-y-2.5 overflow-hidden">
                   {[
-                    "const architect = {",
-                    '  stack: ["Next.js", ".NET", "Python"],',
-                    '  ai: ["LangChain", "RAG", "Ollama"],',
-                    '  infra: ["Docker", "Redis", "K8s"],',
-                    "  mission: build(), ship(), repeat()",
-                    "};",
+                    { prompt: "$", text: "whoami --skills", accent: true },
+                    { text: "full stack developer", indent: true, muted: true },
+                    { text: "", spacer: true },
+                    { prompt: "$", text: "cat stack.json", accent: true },
+                    { text: "frontend:  Next.js, React, Tailwind", indent: true, muted: true },
+                    { text: "backend:   .NET 8, FastAPI, EF Core", indent: true, muted: true },
+                    { text: "ai:        LangChain, Ollama, RAG", indent: true, muted: true },
+                    { text: "infra:     Docker, Redis, Postgres", indent: true, muted: true },
+                    { text: "", spacer: true },
+                    { prompt: "$", text: "build --ship --repeat", accent: true },
+                    { text: "status: ready", indent: true, green: true },
                   ].map((line, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <span
-                        className="text-xs font-mono select-none mt-0.5"
-                        style={{
-                          color: "var(--color-md-outline-variant)",
-                        }}
-                      >
-                        {i + 1}
-                      </span>
-                      <span
-                        className="text-sm font-mono leading-relaxed"
-                        style={{
-                          color:
-                            i === 0
-                              ? "var(--color-md-primary)"
-                              : i === 4
-                                ? "var(--color-md-primary)"
-                                : "var(--color-md-on-surface-variant)",
-                        }}
-                      >
-                        {line}
-                      </span>
+                    <div key={i} className="flex items-start gap-2">
+                      {line.prompt && (
+                        <span
+                          className="text-xs font-mono mt-0.5 shrink-0"
+                          style={{ color: "var(--color-md-primary-fixed)" }}
+                        >
+                          {line.prompt}
+                        </span>
+                      )}
+                      {line.spacer ? (
+                        <span className="text-xs" style={{ lineHeight: "0.5" }}>&nbsp;</span>
+                      ) : (
+                        <span
+                          className="text-xs font-mono leading-relaxed"
+                          style={{
+                            color: line.accent
+                              ? "var(--color-md-primary-fixed)"
+                              : line.green
+                                ? "#28c840"
+                                : "color-mix(in srgb, var(--color-md-on-surface) 40%, transparent)",
+                            paddingLeft: line.indent ? "0.5rem" : 0,
+                          }}
+                        >
+                          {line.text}
+                        </span>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -264,19 +278,17 @@ export function ServicesSection() {
                 <div className="flex items-center gap-2 mt-3">
                   <span
                     className="text-sm font-mono"
-                    style={{ color: "var(--color-md-primary)" }}
+                    style={{ color: "var(--color-md-primary-fixed)" }}
                   >
-                    ▋
+                    $
                   </span>
                   <span
-                    className="text-xs"
+                    className="inline-block w-2 h-4"
                     style={{
-                      color: "var(--color-md-on-surface-variant)",
-                      fontFamily: "var(--font-body)",
+                      backgroundColor: "var(--color-md-primary-fixed)",
+                      animation: "blink 1s step-end infinite",
                     }}
-                  >
-                    always learning...
-                  </span>
+                  />
                 </div>
               </div>
             </div>
@@ -291,8 +303,8 @@ export function ServicesSection() {
                     color: "var(--color-md-on-surface)",
                   }}
                 >
-                  CREATIVE. TECHNICAL. PRECISION.&nbsp;&nbsp;
-                  CREATIVE. TECHNICAL. PRECISION.&nbsp;&nbsp;
+                  BUILD. SHIP. REPEAT.&nbsp;&nbsp;
+                  BUILD. SHIP. REPEAT.&nbsp;&nbsp;
                 </div>
               </div>
             )}

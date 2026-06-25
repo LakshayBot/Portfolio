@@ -37,8 +37,8 @@ export async function GithubCard() {
     <div
       className="p-6 rounded-2xl relative overflow-hidden"
       style={{
-        backgroundColor: "var(--color-md-surface-container-lowest)",
-        border: "1px solid var(--color-md-outline-variant)",
+        backgroundColor: "rgba(255,255,255,0.03)",
+        border: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       {/* Header */}
@@ -84,7 +84,7 @@ export async function GithubCard() {
                 style={{
                   backgroundColor: day
                     ? getContributionColor(day.contributionCount)
-                    : "var(--color-md-surface-container)",
+                    : "rgba(255,255,255,0.04)",
                   gridColumn: wi + 1,
                   gridRow: di + 1,
                 }}

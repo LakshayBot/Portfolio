@@ -15,8 +15,8 @@ export const projects: Project[] = [
     role: "Developer",
     tags: [".NET 8", "FastAPI", "LangGraph", "OpenSearch", "Docker"],
     url: "cyberguard.lakshaycodes.dev",
-    accentColor: "#59ee50",
-    accentBg: "rgba(89,238,80,",
+    accentColor: "#CCFF00",
+    accentBg: "rgba(204,255,0,",
     mockupUrl: "cyberguard.lakshaycodes.dev",
     description: [
       "An agentic RAG platform for security advisory intelligence. Combines a .NET 8 API gateway with five Python FastAPI microservices for vulnerability search, PDF analysis, and operational monitoring, all surfaced through a Next.js dashboard.",

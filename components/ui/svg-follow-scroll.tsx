@@ -27,7 +27,7 @@ export function SvgFollowScroll({
   pathD,
   viewBox,
   scrollYProgress,
-  strokeColor = "#59ee50",
+  strokeColor = "#CCFF00",
   strokeWidth = 2,
   blurAmount = 8,
   glowOpacity = 0.3,

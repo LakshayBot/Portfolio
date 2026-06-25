@@ -13,7 +13,7 @@ export default function GlobalError({
         style={{
           backgroundColor: "var(--color-md-surface)",
           margin: 0,
-          fontFamily: "var(--font-inter), sans-serif",
+          fontFamily: "var(--font-hanken-grotesk), sans-serif",
         }}
       >
         <div className="min-h-screen flex items-center justify-center px-8">

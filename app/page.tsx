@@ -6,43 +6,51 @@ export const dynamic = "force-dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
-import { HeroWithLine } from "@/components/sections/HeroWithLine";
 import { KineticTicker } from "@/components/sections/KineticTicker";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { SkillsGrid } from "@/components/sections/SkillsGrid";
-import { ArchitectureCard } from "@/components/sections/ArchitectureCard";
 import { ContactSection } from "@/components/sections/ContactSection";
-import { SectionConnector } from "@/components/sections/SectionConnector";
+import { PageLine } from "@/components/sections/PageLine";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="overflow-x-hidden">
-        {/* ── Hero — full viewport height, SVG follow-scroll line behind content ── */}
-        <HeroWithLine>
-          {/* Foreground: hero content */}
-          <div className="relative z-10 pt-24 pb-8 px-8 max-w-7xl mx-auto w-full">
-            <Hero />
-          </div>
-          <div className="relative z-10">
-            <KineticTicker />
-          </div>
-        </HeroWithLine>
+      <PageLine>
+        <main className="overflow-x-hidden">
+          {/* ── Hero — full viewport height ── */}
+          <section
+            id="hero"
+            style={{
+              position: "relative",
+              minHeight: "100dvh",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              overflow: "hidden",
+            }}
+          >
+            <div className="relative z-10 pt-24 pb-8 px-8 max-w-7xl mx-auto w-full">
+              <Hero />
+            </div>
+            <div className="relative z-10">
+              <KineticTicker />
+            </div>
+          </section>
 
-        {/* ── Projects ── */}
-        <ProjectsSection />
+          {/* ── Projects ── */}
+          <ProjectsSection />
 
-        {/* ── Services → Skills → Architecture → Contact — section connector SVG line ── */}
-        <SectionConnector>
+          {/* ── Services ── */}
           <ServicesSection />
 
+          {/* ── Skills ── */}
           <section
             id="skills"
             className="py-24 px-8"
             style={{
-              backgroundColor: "var(--color-md-surface-container-lowest)",
+              backgroundColor: "var(--color-bg-dark)",
               marginLeft: "calc(50% - 50vw)",
               marginRight: "calc(50% - 50vw)",
             }}
@@ -57,9 +65,9 @@ export default function Home() {
                     fontSize: "4.6cqw",
                   }}
                 >
-                  <span className="block">Core</span>
-                  <span className="block" style={{ color: "var(--color-md-primary)" }}>
-                    Competencies.
+                  <span className="block">What I</span>
+                  <span className="block" style={{ color: "var(--color-md-primary-fixed)" }}>
+                    Work With.
                   </span>
                 </h2>
               </div>
@@ -67,15 +75,12 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="max-w-7xl mx-auto px-8 py-16">
-            <ArchitectureCard />
-          </section>
-
+          {/* ── Contact ── */}
           <ContactSection />
-        </SectionConnector>
 
-        <Footer />
-      </main>
+          <Footer />
+        </main>
+      </PageLine>
     </>
   );
 }

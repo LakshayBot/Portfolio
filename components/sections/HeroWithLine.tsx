@@ -35,7 +35,7 @@ export function HeroWithLine({ children }: { children: React.ReactNode }) {
           pathD={HERO_PATH}
           viewBox={HERO_VIEWBOX}
           scrollYProgress={scrollYProgress}
-          strokeColor="#59ee50"
+          strokeColor="#CCFF00"
           strokeWidth={1.5}
           blurAmount={6}
           glowOpacity={0.25}

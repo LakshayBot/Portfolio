@@ -23,7 +23,7 @@ export function SectionConnector({ children }: { children: React.ReactNode }) {
           pathD={CONNECTOR_PATH}
           viewBox={CONNECTOR_VIEWBOX}
           scrollYProgress={scrollYProgress}
-          strokeColor="#59ee50"
+          strokeColor="#CCFF00"
           strokeWidth={1}
           blurAmount={5}
           glowOpacity={0.15}

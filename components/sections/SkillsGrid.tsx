@@ -2,22 +2,45 @@
 
 const skills = [
   {
-    icon: "dynamic_form",
-    title: "Front-end Excellence",
+    title: "Frontend",
     description:
-      "Building immersive UIs with React and Next.js, focusing on performance and web vitals.",
+      "React and Next.js interfaces focused on performance, accessibility, and smooth animations.",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="2" fill="currentColor" />
+        <g stroke="currentColor" strokeWidth="1.3" fill="none">
+          <ellipse rx="10" ry="3.8" cx="12" cy="12" />
+          <ellipse rx="10" ry="3.8" cx="12" cy="12" transform="rotate(60 12 12)" />
+          <ellipse rx="10" ry="3.8" cx="12" cy="12" transform="rotate(120 12 12)" />
+        </g>
+      </svg>
+    ),
   },
   {
-    icon: "database",
-    title: "Robust Back-end",
+    title: "Backend",
     description:
-      "Designing secure, scalable APIs with Node.js and distributed database architectures.",
+      ".NET 8 and FastAPI APIs, microservice design, EF Core, PostgreSQL, and Redis caching.",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <ellipse cx="12" cy="5" rx="8" ry="3" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+    ),
   },
   {
-    icon: "precision_manufacturing",
-    title: "Engineering Mindset",
+    title: "AI & Infra",
     description:
-      "Applying structural problem-solving techniques to complex digital infrastructures.",
+      "RAG pipelines, LangChain workflows, Docker multi-service deployments, and observability.",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
+        <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
+        <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
+        <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    ),
   },
 ];
 
@@ -29,10 +52,8 @@ export function SkillsGrid() {
           key={skill.title}
           className="skill-card p-8 rounded-lg transition-colors duration-200"
         >
-          <div className="mb-6" style={{ color: "var(--color-md-primary)" }}>
-            <span className="material-symbols-outlined" style={{ fontSize: "2.25rem" }}>
-              {skill.icon}
-            </span>
+          <div className="mb-6" style={{ color: "var(--color-md-primary-fixed)" }}>
+            {skill.icon}
           </div>
           <h3
             className="font-bold text-xl mb-3"
@@ -43,7 +64,14 @@ export function SkillsGrid() {
           >
             {skill.title}
           </h3>
-          <p style={{ color: "var(--color-md-on-surface-variant)" }}>
+          <p
+            style={{
+              color: "var(--color-md-on-surface-variant)",
+              fontFamily: "var(--font-space-grotesk)",
+              fontSize: "0.875rem",
+              lineHeight: 1.7,
+            }}
+          >
             {skill.description}
           </p>
         </div>
