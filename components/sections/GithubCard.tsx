@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { CommitsGrid } from "@/components/ui/commits-grid";
 import { getContributionColor, type ContributionWeek } from "@/lib/github";
 
@@ -10,7 +10,13 @@ interface GithubCardProps {
 }
 
 export function GithubCard({ weeks, username }: GithubCardProps) {
+  const [fadingOut, setFadingOut] = useState(false);
   const [animationDone, setAnimationDone] = useState(false);
+
+  const handleAnimationComplete = useCallback(() => {
+    setFadingOut(true);
+    setTimeout(() => setAnimationDone(true), 500);
+  }, []);
 
   // Build month label positions
   const monthLabels = useMemo(() => {
@@ -38,7 +44,14 @@ export function GithubCard({ weeks, username }: GithubCardProps) {
     <div className="relative">
       {/* Animated commits grid overlay */}
       {!animationDone && (
-        <div className="p-6 rounded-2xl" style={{ backgroundColor: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+        <div
+          className="p-6 rounded-2xl transition-opacity duration-500"
+          style={{
+            opacity: fadingOut ? 0 : 1,
+            backgroundColor: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.06)",
+          }}
+        >
           <div className="flex justify-between items-start mb-4">
             <span
               className="text-sm font-semibold tracking-wide"
@@ -53,7 +66,7 @@ export function GithubCard({ weeks, username }: GithubCardProps) {
           <CommitsGrid
             text={username}
             className="border-0 rounded-none p-0 bg-transparent"
-            onAnimationComplete={() => setAnimationDone(true)}
+            onAnimationComplete={handleAnimationComplete}
           />
         </div>
       )}
