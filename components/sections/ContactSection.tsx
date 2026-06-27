@@ -1,10 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-
-const CYCLE_INTERVAL = 4000; // ms between flips
-
-/* ── SVG icons reused across card faces ── */
+/* ── SVG icons ── */
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -31,7 +27,7 @@ function MailIcon({ className }: { className?: string }) {
   );
 }
 
-function ArrowIcon({ className }: { className?: string }) {
+function ArrowUpRight({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <path d="M7 17L17 7" />
@@ -40,181 +36,28 @@ function ArrowIcon({ className }: { className?: string }) {
   );
 }
 
-/* ── Card face data ── */
+/* ── Contact links ── */
 
-interface CardFace {
-  title: string;
-  subtitle: string;
-  label: string;
-  href: string;
-  external?: boolean;
-  Icon: React.ComponentType<{ className?: string }>;
-}
-
-const CARDS: CardFace[] = [
+const LINKS = [
   {
-    title: "LakshayBot",
-    subtitle: "Open source contributor. Building tools, APIs & AI systems.",
     label: "GitHub",
     href: "https://github.com/LakshayBot",
     external: true,
     Icon: GitHubIcon,
   },
   {
-    title: "Let's Connect",
-    subtitle: "Full Stack Developer — .NET, Next.js, Python & TypeScript.",
     label: "LinkedIn",
     href: "https://linkedin.com/in/lakshaymalhotra",
     external: true,
     Icon: LinkedInIcon,
   },
   {
-    title: "lakshay@lakshay.dev",
-    subtitle: "Open for freelance projects & full-time opportunities.",
     label: "Say Hello",
     href: "mailto:lakshay@lakshay.dev",
     external: false,
     Icon: MailIcon,
   },
 ];
-
-/* ── 3D Flip Card ── */
-
-function KineticFlipCard() {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [frontIdx, setFrontIdx] = useState(0);
-  const [backIdx, setBackIdx] = useState(1);
-  const [paused, setPaused] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const advance = useCallback(() => {
-    setIsFlipped((prev) => {
-      const next = !prev;
-      if (next) {
-        // About to show back face → advance back idx
-        setBackIdx((i) => (i + 2) % CARDS.length);
-      } else {
-        // About to show front face → advance front idx
-        setFrontIdx((i) => (i + 2) % CARDS.length);
-      }
-      return next;
-    });
-  }, []);
-
-  useEffect(() => {
-    if (paused) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      return;
-    }
-    timerRef.current = setInterval(advance, CYCLE_INTERVAL);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [paused, advance]);
-
-  const front = CARDS[frontIdx];
-  const back = CARDS[backIdx];
-
-  const CardFaceContent = ({
-    face,
-    isBack,
-  }: {
-    face: CardFace;
-    isBack: boolean;
-  }) => (
-    <a
-      href={face.href}
-      target={face.external ? "_blank" : undefined}
-      rel={face.external ? "noopener noreferrer" : undefined}
-      className="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-3 sm:gap-4 p-4 sm:p-6 group/card cursor-pointer select-none"
-      style={{
-        backfaceVisibility: "hidden",
-        WebkitBackfaceVisibility: "hidden",
-        transform: isBack ? "rotateY(180deg)" : "rotateY(0deg)",
-        backgroundColor: "var(--color-bg-dark)",
-        border: "1px solid rgba(195,244,0,0.08)",
-        boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)",
-      }}
-    >
-      {/* Icon */}
-      <div
-        className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center transition-all duration-500 group-hover/card:scale-110 group-hover/card:shadow-lg"
-        style={{
-          backgroundColor: "rgba(195,244,0,0.06)",
-          color: "var(--color-md-primary-fixed)",
-          boxShadow: "0 0 0 1px rgba(195,244,0,0.1)",
-        }}
-      >
-        <face.Icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-      </div>
-
-      {/* Title */}
-      <h3
-        className="text-sm sm:text-base md:text-lg font-bold tracking-tight text-center transition-all duration-300"
-        style={{
-          fontFamily: "var(--font-space-grotesk)",
-          color: "var(--color-bone-white)",
-        }}
-      >
-        {face.title}
-      </h3>
-
-      {/* Subtitle */}
-      <p
-        className="text-xs text-center leading-relaxed max-w-[200px]"
-        style={{
-          fontFamily: "var(--font-hanken-grotesk)",
-          color: "var(--color-md-on-surface-variant)",
-          opacity: 0.7,
-        }}
-      >
-        {face.subtitle}
-      </p>
-
-      {/* Label + arrow */}
-      <div
-        className="flex items-center gap-1.5 mt-1 transition-all duration-300 group-hover/card:gap-2.5"
-        style={{ color: "var(--color-md-primary-fixed)" }}
-      >
-        <span
-          className="text-xs font-semibold uppercase tracking-widest"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
-        >
-          {face.label}
-        </span>
-        <ArrowIcon className="w-3.5 h-3.5 transition-transform duration-300 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
-      </div>
-    </a>
-  );
-
-  return (
-    <div
-      className="perspective-container shrink-0 w-32 h-44 sm:w-40 sm:h-56 md:w-56 md:h-72 lg:w-72 lg:h-[24rem] mx-2 md:mx-8"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <div
-        className="w-full h-full"
-        style={{
-          transform: "rotateX(25deg)",
-          transformStyle: "preserve-3d",
-        }}
-      >
-        <div
-          className="relative w-full h-full transition-transform duration-[800ms]"
-          style={{
-            transformStyle: "preserve-3d",
-            transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-            transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-          }}
-        >
-          <CardFaceContent face={front} isBack={false} />
-          <CardFaceContent face={back} isBack />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /* ── Contact Section ── */
 
@@ -231,40 +74,59 @@ export function ContactSection() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        paddingTop: "6rem",
-        paddingBottom: "6rem",
+        paddingTop: "4rem",
+        paddingBottom: "4rem",
       }}
     >
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
-        {/* ── "get in / touch" split with flip card ── */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 w-full">
-          {/* Left: "get in" */}
-          <h1
-            className="text-3xl sm:text-4xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none shrink-0 select-none"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-bone-white)",
-              letterSpacing: "-0.05em",
-            }}
-          >
-            get in
-          </h1>
+      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center gap-8 sm:gap-12 md:gap-16">
+        {/* ── "get in" ── */}
+        <h1
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none select-none lowercase"
+          style={{
+            fontFamily: "var(--font-space-grotesk)",
+            color: "var(--color-bone-white)",
+            letterSpacing: "-0.06em",
+          }}
+        >
+          get in
+        </h1>
 
-          {/* Center: 3D flip card */}
-          <KineticFlipCard />
-
-          {/* Right: "touch" */}
-          <h1
-            className="text-3xl sm:text-4xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none shrink-0 select-none"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-bone-white)",
-              letterSpacing: "-0.05em",
-            }}
-          >
-            touch
-          </h1>
+        {/* ── Contact links row ── */}
+        <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-8">
+          {LINKS.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noopener noreferrer" : undefined}
+              className="group flex items-center gap-2.5 px-4 py-2.5 transition-all duration-300 select-none"
+              style={{
+                color: "var(--color-md-on-surface-variant)",
+              }}
+            >
+              <link.Icon className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 transition-colors duration-300 group-hover:text-[var(--color-md-primary-fixed)]" />
+              <span
+                className="text-sm sm:text-base font-medium transition-colors duration-300 group-hover:text-[var(--color-bone-white)]"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+              >
+                {link.label}
+              </span>
+              <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0 opacity-0 -translate-y-0.5 translate-x-0.5 transition-all duration-300 group-hover:opacity-70 group-hover:translate-y-0 group-hover:translate-x-0 text-[var(--color-md-primary-fixed)]" />
+            </a>
+          ))}
         </div>
+
+        {/* ── "touch" ── */}
+        <h1
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none select-none lowercase"
+          style={{
+            fontFamily: "var(--font-space-grotesk)",
+            color: "var(--color-bone-white)",
+            letterSpacing: "-0.06em",
+          }}
+        >
+          touch
+        </h1>
       </div>
     </section>
   );

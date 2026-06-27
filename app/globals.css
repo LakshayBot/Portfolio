@@ -313,11 +313,6 @@
   font-family: var(--font-space-grotesk);
 }
 
-/* ─── 3D perspective for contact flip card ──────────────────────────── */
-.perspective-container {
-  perspective: 1200px;
-}
-
 /* ─── Selection colors ───────────────────────────────────────────────── */
 ::selection {
   background-color: var(--color-acid-lime);
