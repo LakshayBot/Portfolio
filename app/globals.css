@@ -430,13 +430,16 @@
     background-color: var(--color-bg-dark);
     border-color: transparent;
   }
-  10% {
+  15% {
     background-color: var(--highlight, #48d55d);
     border-color: var(--highlight, #48d55d);
   }
-  100% {
+  70% {
     background-color: var(--highlight, #48d55d);
-    border-color: var(--highlight, #48d55d);
+  }
+  100% {
+    background-color: var(--real-bg, var(--color-bg-dark));
+    border-color: transparent;
   }
 }
 
@@ -445,24 +448,24 @@
     background-color: var(--color-bg-dark);
     border-color: transparent;
   }
-  5% {
+  8% {
     background-color: var(--highlight, #48d55d);
     border-color: var(--highlight, #48d55d);
   }
-  10% {
+  16% {
     background-color: var(--color-bg-dark);
     border-color: transparent;
   }
   100% {
-    background-color: var(--color-bg-dark);
+    background-color: var(--real-bg, var(--color-bg-dark));
     border-color: transparent;
   }
 }
 
 .animate-highlight {
-  animation: highlight 0.8s ease-out forwards;
+  animation: highlight 1.8s ease-out forwards;
 }
 
 .animate-flash {
-  animation: flash 1.5s ease-in-out infinite;
+  animation: flash 2.2s ease-out forwards;
 }

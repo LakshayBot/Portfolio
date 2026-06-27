@@ -1,5 +1,6 @@
 import { getContributions, getContributionColor } from "@/lib/github";
 import { siteConfig } from "@/data/site-config";
+import { AnimatedHeatmap } from "@/components/sections/AnimatedHeatmap";
 
 export async function GithubCard() {
   let data;
@@ -61,34 +62,7 @@ export async function GithubCard() {
       </div>
 
       {/* Heatmap: columns = weeks, rows = days (Sun→Sat) */}
-      <div
-        className="grid gap-[3px]"
-        style={{ gridTemplateColumns: `repeat(${weeks.length}, 1fr)` }}
-      >
-        {weeks.map((week, wi) =>
-          Array.from({ length: 7 }).map((_, di) => {
-            const day = week.contributionDays[di];
-            return (
-              <div
-                key={`${wi}-${di}`}
-                title={
-                  day
-                    ? `${day.date}: ${day.contributionCount} contribution${day.contributionCount !== 1 ? "s" : ""}`
-                    : undefined
-                }
-                className="aspect-square rounded-[2px] transition-opacity hover:opacity-70"
-                style={{
-                  backgroundColor: day
-                    ? getContributionColor(day.contributionCount)
-                    : "rgba(255,255,255,0.04)",
-                  gridColumn: wi + 1,
-                  gridRow: di + 1,
-                }}
-              />
-            );
-          })
-        )}
-      </div>
+      <AnimatedHeatmap weeks={weeks} />
 
       {/* Month labels */}
       <div className="flex justify-between mt-3">

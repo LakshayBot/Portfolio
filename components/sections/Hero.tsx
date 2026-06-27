@@ -1,5 +1,4 @@
 import { GithubCard } from "@/components/sections/GithubCard";
-import { GithubCardWithAnimation } from "@/components/sections/GithubCardWithAnimation";
 import { HeroHeadline } from "@/components/sections/HeroHeadline";
 
 export async function Hero() {
@@ -51,11 +50,9 @@ export async function Hero() {
           </div>
         </div>
 
-        {/* Right: GitHub contributions card (with animation overlay) */}
+        {/* Right: GitHub contributions card */}
         <div>
-          <GithubCardWithAnimation>
-            <GithubCard />
-          </GithubCardWithAnimation>
+          <GithubCard />
         </div>
       </div>
     </section>
