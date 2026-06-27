@@ -123,64 +123,68 @@ export function SkillsStack() {
         </div>
 
         {/* Stacking cards */}
-        <ContainerScroll className="min-h-[300vh] sm:min-h-[350vh] md:min-h-[400vh]">
+        <ContainerScroll className="min-h-[300vh] sm:min-h-[320vh]">
           {CARDS.map((card, i) => (
             <CardSticky
               key={card.title}
               index={i}
-              incrementY={80}
-              incrementZ={12}
-              className="rounded-2xl mx-auto w-[calc(100%-1rem)] sm:w-[92%] lg:w-[min(85%,800px)]"
+              incrementY={0}
+              incrementZ={15}
+              className="mx-auto w-[calc(100%-0.75rem)] sm:w-[94%] lg:w-[min(90%,880px)]"
+              style={{ zIndex: (i + 1) * 10 }}
             >
               <div
-                className="p-5 sm:p-7 md:p-8 rounded-2xl backdrop-blur-sm transition-shadow duration-300 hover:shadow-lg"
+                className="p-6 sm:p-8 md:p-10 rounded-2xl backdrop-blur-sm min-h-[65vh] sm:min-h-[70vh] flex flex-col justify-center transition-shadow duration-300"
                 style={{
                   backgroundColor: "rgba(255,255,255,0.025)",
                   border: "1px solid rgba(195,244,0,0.06)",
-                  boxShadow: "0 20px 50px -15px rgba(0,0,0,0.5)",
+                  boxShadow: "0 30px 60px -20px rgba(0,0,0,0.6)",
                 }}
               >
                 {/* Illustration + title row */}
-                <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6 mb-5">
+                <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
                   {/* Illustration */}
                   <div
-                    className="shrink-0 w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-xl flex items-center justify-center"
+                    className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center mb-5"
                     style={{
                       backgroundColor: "rgba(195,244,0,0.04)",
                       color: "var(--color-md-primary-fixed)",
-                      border: "1px solid rgba(195,244,0,0.08)",
+                      border: "1px solid rgba(195,244,0,0.1)",
                     }}
                   >
                     <card.Illustration />
                   </div>
 
-                  {/* Title + tech badge */}
-                  <div className="min-w-0">
-                    <h3
-                      className="text-xl sm:text-2xl font-bold tracking-tight mb-2"
-                      style={{
-                        fontFamily: "var(--font-space-grotesk)",
-                        color: "var(--color-bone-white)",
-                      }}
-                    >
-                      {card.title}
-                    </h3>
-                    <span
-                      className="text-xs sm:text-sm font-medium tracking-wide"
-                      style={{
-                        fontFamily: "var(--font-space-grotesk)",
-                        color: "var(--color-md-primary-fixed)",
-                        opacity: 0.8,
-                      }}
-                    >
-                      {card.tech}
-                    </span>
-                  </div>
+                  {/* Title */}
+                  <h3
+                    className="text-2xl sm:text-3xl font-bold tracking-tight mb-3"
+                    style={{
+                      fontFamily: "var(--font-space-grotesk)",
+                      color: "var(--color-bone-white)",
+                    }}
+                  >
+                    {card.title}
+                  </h3>
+                  
+                  {/* Tech badge */}
+                  <span
+                    className="text-sm font-medium tracking-wide mb-4"
+                    style={{
+                      fontFamily: "var(--font-space-grotesk)",
+                      color: "var(--color-md-primary-fixed)",
+                      opacity: 0.75,
+                    }}
+                  >
+                    {card.tech}
+                  </span>
+
+                  {/* Divider */}
+                  <div className="w-16 h-px mx-auto mb-4" style={{ backgroundColor: "rgba(195,244,0,0.12)" }} />
                 </div>
 
                 {/* Description */}
                 <p
-                  className="text-sm sm:text-base leading-relaxed"
+                  className="text-sm sm:text-base leading-relaxed max-w-lg mx-auto text-center"
                   style={{
                     fontFamily: "var(--font-hanken-grotesk)",
                     color: "var(--color-md-on-surface-variant)",
