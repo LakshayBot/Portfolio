@@ -89,7 +89,7 @@ export function TubelightNav({
   return (
     <div
       className={cn(
-        "flex items-center gap-1 bg-background/5 border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg",
+        "flex items-center gap-0.5 sm:gap-1 bg-background/5 border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg",
         className
       )}
       style={{
@@ -112,7 +112,7 @@ export function TubelightNav({
               onActiveChange?.(item.name);
             }}
             className={cn(
-              "relative cursor-pointer text-sm font-semibold px-5 py-2 rounded-full transition-colors select-none",
+              "relative cursor-pointer text-sm font-semibold px-3 py-2 md:px-5 rounded-full transition-colors select-none",
               isActive
                 ? "text-[var(--color-md-on-surface)]"
                 : "text-[var(--color-md-on-surface-variant)]/70 hover:text-[var(--color-md-on-surface)]"

@@ -126,7 +126,7 @@ function KineticFlipCard() {
       href={face.href}
       target={face.external ? "_blank" : undefined}
       rel={face.external ? "noopener noreferrer" : undefined}
-      className="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-4 p-6 group/card cursor-pointer select-none"
+      className="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-3 sm:gap-4 p-4 sm:p-6 group/card cursor-pointer select-none"
       style={{
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
@@ -138,19 +138,19 @@ function KineticFlipCard() {
     >
       {/* Icon */}
       <div
-        className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center transition-all duration-500 group-hover/card:scale-110 group-hover/card:shadow-lg"
+        className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center transition-all duration-500 group-hover/card:scale-110 group-hover/card:shadow-lg"
         style={{
           backgroundColor: "rgba(195,244,0,0.06)",
           color: "var(--color-md-primary-fixed)",
           boxShadow: "0 0 0 1px rgba(195,244,0,0.1)",
         }}
       >
-        <face.Icon className="w-5 h-5 md:w-6 md:h-6" />
+        <face.Icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
       </div>
 
       {/* Title */}
       <h3
-        className="text-base md:text-lg font-bold tracking-tight text-center transition-all duration-300"
+        className="text-sm sm:text-base md:text-lg font-bold tracking-tight text-center transition-all duration-300"
         style={{
           fontFamily: "var(--font-space-grotesk)",
           color: "var(--color-bone-white)",
@@ -189,7 +189,7 @@ function KineticFlipCard() {
 
   return (
     <div
-      className="perspective-container shrink-0 w-40 h-56 md:w-56 md:h-72 lg:w-72 lg:h-[24rem] mx-2 md:mx-8"
+      className="perspective-container shrink-0 w-32 h-44 sm:w-40 sm:h-56 md:w-56 md:h-72 lg:w-72 lg:h-[24rem] mx-2 md:mx-8"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -237,10 +237,10 @@ export function ContactSection() {
     >
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
         {/* ── "get in / touch" split with flip card ── */}
-        <div className="flex items-center justify-center gap-2 md:gap-8 lg:gap-12 w-full">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 w-full">
           {/* Left: "get in" */}
           <h1
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none shrink-0 select-none"
+            className="text-3xl sm:text-4xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none shrink-0 select-none"
             style={{
               fontFamily: "var(--font-space-grotesk)",
               color: "var(--color-bone-white)",
@@ -255,7 +255,7 @@ export function ContactSection() {
 
           {/* Right: "touch" */}
           <h1
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none shrink-0 select-none"
+            className="text-3xl sm:text-4xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none shrink-0 select-none"
             style={{
               fontFamily: "var(--font-space-grotesk)",
               color: "var(--color-bone-white)",

@@ -58,70 +58,88 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav
-      className="fixed top-0 w-full z-50 backdrop-blur-md"
-      style={{
-        backgroundColor: "color-mix(in srgb, var(--color-bg-dark) 70%, transparent)",
-        borderBottom: "1px solid color-mix(in srgb, var(--color-md-primary-fixed) 8%, transparent)",
-      }}
-    >
-      <div className="flex items-center justify-between px-6 md:px-8 py-3 max-w-full mx-auto gap-4">
-        {/* ── Brand (left) ── */}
-        <div
-          className="text-lg md:text-xl font-bold tracking-tighter shrink-0"
-          style={{
-            fontFamily: "var(--font-space-grotesk)",
-            color: "var(--color-md-on-surface)",
-          }}
-        >
-          {mounted ? (
-            <TextScramble
-              as="span"
-              duration={1.2}
-              speed={0.04}
-              trigger={true}
-              characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%"
+    <>
+      {/* ── Top bar ── */}
+      <nav
+        className="fixed top-0 w-full z-50 backdrop-blur-md"
+        style={{
+          backgroundColor: "color-mix(in srgb, var(--color-bg-dark) 70%, transparent)",
+          borderBottom: "1px solid color-mix(in srgb, var(--color-md-primary-fixed) 8%, transparent)",
+        }}
+      >
+        <div className="flex items-center justify-between px-5 sm:px-6 md:px-8 py-3 max-w-full mx-auto gap-3">
+          {/* ── Brand (left) ── */}
+          <div
+            className="text-lg md:text-xl font-bold tracking-tighter shrink-0"
+            style={{
+              fontFamily: "var(--font-space-grotesk)",
+              color: "var(--color-md-on-surface)",
+            }}
+          >
+            {mounted ? (
+              <TextScramble
+                as="span"
+                duration={1.2}
+                speed={0.04}
+                trigger={true}
+                characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%"
+              >
+                LAKSHAY.DEV
+              </TextScramble>
+            ) : (
+              <span>LAKSHAY.DEV</span>
+            )}
+          </div>
+
+          {/* ── Desktop: tubelight nav (center) ── */}
+          <div className="hidden sm:block">
+            <TubelightNav items={NAV_ITEMS} homeSectionId="hero" />
+          </div>
+
+          {/* ── Right: theme toggle (desktop) / CTA button (mobile) ── */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Mobile CTA */}
+            <a
+              href="#contact"
+              className="sm:hidden inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3.5 py-2 rounded-full border transition-all duration-200"
+              style={{
+                fontFamily: "var(--font-space-grotesk)",
+                color: "var(--color-bg-dark)",
+                backgroundColor: "var(--color-md-primary-fixed)",
+                borderColor: "var(--color-md-primary-fixed)",
+              }}
             >
-              LAKSHAY.DEV
-            </TextScramble>
-          ) : (
-            <span>LAKSHAY.DEV</span>
-          )}
-        </div>
+              Hire Me
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17L17 7" />
+                <path d="M7 7h10v10" />
+              </svg>
+            </a>
 
-        {/* ── Tubelight nav (center) ── */}
-        <div className="hidden sm:block">
-          <TubelightNav items={NAV_ITEMS} homeSectionId="hero" />
+            {/* Theme toggle (always visible) */}
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="rounded-lg"
+                aria-label="Toggle dark mode"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-5 w-5" style={{ color: "var(--color-md-on-surface-variant)" }} />
+                ) : (
+                  <Moon className="h-5 w-5" style={{ color: "var(--color-md-on-surface-variant)" }} />
+                )}
+              </Button>
+            )}
+          </div>
         </div>
+      </nav>
 
-        {/* ── Theme toggle (right) ── */}
-        <div className="flex items-center gap-2 shrink-0">
-          {mounted && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="rounded-lg"
-              aria-label="Toggle dark mode"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-5 w-5" style={{ color: "var(--color-md-on-surface-variant)" }} />
-              ) : (
-                <Moon className="h-5 w-5" style={{ color: "var(--color-md-on-surface-variant)" }} />
-              )}
-            </Button>
-          )}
-        </div>
+      {/* ── Mobile: bottom pill nav (outside <nav> so backdrop-filter doesn't break fixed positioning) ── */}
+      <div className="sm:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-[200]">
+        <TubelightNav items={NAV_ITEMS} homeSectionId="hero" className="shadow-xl shadow-black/40" />
       </div>
-
-      {/* ── Mobile: bottom pill nav ── */}
-      <div className="sm:hidden">
-        <TubelightNav
-          items={NAV_ITEMS}
-          homeSectionId="hero"
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] shadow-xl"
-        />
-      </div>
-    </nav>
+    </>
   );
 }
