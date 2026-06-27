@@ -1,7 +1,11 @@
 "use client";
 
-import { useRef } from "react";
-import { useScroll, useTransform, motion, type MotionValue } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { useTransform, motion, useMotionValue, type MotionValue } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* ── Tech illustrations ── */
 
@@ -187,7 +191,24 @@ function SkillCard({ i, title, description, tech, Illustration, color, progress,
 
 export function SkillsStack() {
   const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll();
+  const progress = useMotionValue(0);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const trigger = ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      onUpdate: (self) => {
+        progress.set(self.progress);
+      },
+    });
+
+    return () => trigger.kill();
+  }, [progress]);
 
   return (
     <section
@@ -232,7 +253,7 @@ export function SkillsStack() {
             tech={card.tech}
             Illustration={card.Illustration}
             color={card.color}
-            progress={scrollYProgress}
+            progress={progress}
             range={[i * 0.25, 1]}
             targetScale={targetScale}
           />
