@@ -1,13 +1,19 @@
 import { GithubCard } from "@/components/sections/GithubCard";
 import { HeroHeadline } from "@/components/sections/HeroHeadline";
+import { getContributions } from "@/lib/github";
+import { siteConfig } from "@/data/site-config";
 
 export async function Hero() {
+  let weeks = [] as { contributionDays: { contributionCount: number; date: string }[] }[];
+  try {
+    const data = await getContributions(siteConfig.githubUsername);
+    weeks = (data?.weeks ?? []).slice(-26);
+  } catch (err) {
+    console.error("GitHub fetch failed:", err);
+  }
+
   return (
     <section className="space-y-8 w-full" style={{ containerType: "inline-size" }}>
-      {/*
-        HeroHeadline is a "use client" component so TextEffect can run.
-        Extracted to keep Hero as an async RSC — required for GithubCard.
-      */}
       <HeroHeadline />
 
       {/* ── Below headline: 2-col split ── */}
@@ -52,7 +58,7 @@ export async function Hero() {
 
         {/* Right: GitHub contributions card */}
         <div>
-          <GithubCard />
+          <GithubCard weeks={weeks} username={siteConfig.githubUsername} />
         </div>
       </div>
     </section>

@@ -423,3 +423,46 @@
     animation: none;
   }
 }
+
+/* ─── GitHub commits grid animations ─────────────────────────────────── */
+@keyframes highlight {
+  0% {
+    background-color: var(--color-bg-dark);
+    border-color: transparent;
+  }
+  10% {
+    background-color: var(--highlight, #48d55d);
+    border-color: var(--highlight, #48d55d);
+  }
+  100% {
+    background-color: var(--highlight, #48d55d);
+    border-color: var(--highlight, #48d55d);
+  }
+}
+
+@keyframes flash {
+  0% {
+    background-color: var(--color-bg-dark);
+    border-color: transparent;
+  }
+  5% {
+    background-color: var(--highlight, #48d55d);
+    border-color: var(--highlight, #48d55d);
+  }
+  10% {
+    background-color: var(--color-bg-dark);
+    border-color: transparent;
+  }
+  100% {
+    background-color: var(--color-bg-dark);
+    border-color: transparent;
+  }
+}
+
+.animate-highlight {
+  animation: highlight 0.8s ease-out forwards;
+}
+
+.animate-flash {
+  animation: flash 1.5s ease-in-out infinite;
+}
