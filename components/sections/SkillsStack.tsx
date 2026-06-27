@@ -1,8 +1,9 @@
 "use client";
 
-import { ContainerScroll, CardSticky } from "@/components/ui/cards-stack";
+import { useRef } from "react";
+import { useScroll, useTransform, motion, type MotionValue } from "framer-motion";
 
-/* ── Tech illustrations (inline SVGs) ── */
+/* ── Tech illustrations ── */
 
 function FrontendIllustration() {
   return (
@@ -16,11 +17,8 @@ function FrontendIllustration() {
       <rect x="18" y="35" width="14" height="3" rx="1.5" fill="currentColor" opacity="0.3" />
       <rect x="34" y="35" width="8" height="3" rx="1.5" fill="currentColor" opacity="0.3" />
       <rect x="8" y="48" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <path d="M16 52v12M8 56h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
       <rect x="28" y="48" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <path d="M36 52v12M28 56h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
       <rect x="48" y="48" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <path d="M56 52v12M48 56h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
     </svg>
   );
 }
@@ -58,8 +56,6 @@ function AIIllustration() {
       <circle cx="18" cy="44" r="1.5" fill="currentColor" opacity="0.8" />
       <circle cx="46" cy="44" r="1.5" fill="currentColor" opacity="0.8" />
       <circle cx="32" cy="52" r="1.5" fill="currentColor" opacity="0.8" />
-      <rect x="26" y="10" width="12" height="15" rx="3" fill="currentColor" opacity="0.04" />
-      <path d="M28 12h4M28 15h6M28 18h3" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" opacity="0.25" />
     </svg>
   );
 }
@@ -73,6 +69,7 @@ const CARDS = [
     description:
       "Built the CyberGuard AI dashboard and KnowGraph event explorer as performant Next.js frontends with TypeScript-first architecture and Tailwind styling. Each interface handles complex data visualisation, real-time search filtering, and responsive layouts across every device.",
     Illustration: FrontendIllustration,
+    color: "#5196fd",
   },
   {
     title: "Backend & APIs",
@@ -80,6 +77,7 @@ const CARDS = [
     description:
       "A .NET 8 API gateway orchestrates five Python FastAPI microservices in CyberGuard — handling vulnerability search, PDF analysis, and agentic RAG routing. KnowGraph uses Clean Architecture with MediatR, CQRS, and FluentValidation for a Neo4j-backed causal graph engine.",
     Illustration: BackendIllustration,
+    color: "#8f89ff",
   },
   {
     title: "AI & Infrastructure",
@@ -87,117 +85,162 @@ const CARDS = [
     description:
       "Agentic RAG pipelines with LangGraph for retrieval routing, document grading, and answer generation — all powered by local LLM inference through Ollama. Docker Compose orchestrates multi-service deployments with OpenSearch hybrid search, Redis caching, and Langfuse observability tracing.",
     Illustration: AIIllustration,
+    color: "#13006c",
   },
 ];
+
+/* ── Individual card ── */
+
+interface SkillCardProps {
+  i: number;
+  title: string;
+  description: string;
+  tech: string;
+  Illustration: React.ComponentType;
+  color: string;
+  progress: MotionValue<number>;
+  range: [number, number];
+  targetScale: number;
+}
+
+function SkillCard({ i, title, description, tech, Illustration, color, progress, range, targetScale }: SkillCardProps) {
+  const container = useRef<HTMLDivElement>(null);
+  const scale = useTransform(progress, range, [1, targetScale]);
+
+  return (
+    <div ref={container} className="h-screen flex items-center justify-center sticky top-0">
+      <motion.div
+        style={{
+          scale,
+          top: `calc(-5vh + ${i * 20}px)`,
+        }}
+        className="flex flex-col items-center justify-center relative w-[90%] sm:w-[75%] md:w-[65%] lg:max-w-[700px] min-h-[380px] sm:min-h-[420px] rounded-2xl p-6 sm:p-10 origin-top"
+      >
+        {/* Card background */}
+        <div
+          className="absolute inset-0 rounded-2xl"
+          style={{
+            backgroundColor: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(195,244,0,0.06)",
+            boxShadow: "0 30px 60px -20px rgba(0,0,0,0.6)",
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 flex flex-col items-center text-center max-w-lg">
+          {/* Illustration */}
+          <div
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center mb-5"
+            style={{
+              backgroundColor: "rgba(195,244,0,0.04)",
+              color: "var(--color-md-primary-fixed)",
+              border: "1px solid rgba(195,244,0,0.1)",
+            }}
+          >
+            <Illustration />
+          </div>
+
+          {/* Title */}
+          <h3
+            className="text-2xl sm:text-3xl font-bold tracking-tight mb-3"
+            style={{
+              fontFamily: "var(--font-space-grotesk)",
+              color: "var(--color-bone-white)",
+            }}
+          >
+            {title}
+          </h3>
+
+          {/* Tech badge */}
+          <span
+            className="text-sm font-medium tracking-wide mb-4"
+            style={{
+              fontFamily: "var(--font-space-grotesk)",
+              color: "var(--color-md-primary-fixed)",
+              opacity: 0.75,
+            }}
+          >
+            {tech}
+          </span>
+
+          {/* Divider */}
+          <div className="w-16 h-px mx-auto mb-4" style={{ backgroundColor: "rgba(195,244,0,0.12)" }} />
+
+          {/* Description */}
+          <p
+            className="text-sm sm:text-base leading-relaxed"
+            style={{
+              fontFamily: "var(--font-hanken-grotesk)",
+              color: "var(--color-md-on-surface-variant)",
+              opacity: 0.85,
+            }}
+          >
+            {description}
+          </p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 /* ── Skills Stack Section ── */
 
 export function SkillsStack() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll();
+
   return (
     <section
       id="skills"
+      ref={sectionRef}
+      className="relative"
       style={{
         backgroundColor: "var(--color-bg-dark)",
         marginLeft: "calc(50% - 50vw)",
         marginRight: "calc(50% - 50vw)",
-        paddingTop: "5rem",
-        paddingBottom: "2rem",
       }}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
-        <div className="mb-12 sm:mb-16" style={{ containerType: "inline-size" }}>
-          <h2
-            className="font-black leading-[0.9] tracking-tighter uppercase whitespace-nowrap"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-md-on-surface)",
-              fontSize: "clamp(2rem, 4.6cqw, 6rem)",
-            }}
-          >
-            <span className="block">What I</span>
-            <span className="block" style={{ color: "var(--color-md-primary-fixed)" }}>
-              Work With.
-            </span>
-          </h2>
-        </div>
-
-        {/* Stacking cards */}
-        <ContainerScroll className="min-h-[300vh] sm:min-h-[320vh]">
-          {CARDS.map((card, i) => (
-            <CardSticky
-              key={card.title}
-              index={i}
-              incrementY={0}
-              incrementZ={15}
-              className="rounded-none sm:rounded-2xl w-full"
-              style={{ zIndex: (i + 1) * 10 }}
-            >
-              <div
-                className="p-8 sm:p-10 md:p-14 rounded-none sm:rounded-2xl backdrop-blur-sm min-h-[80vh] sm:min-h-[85vh] flex flex-col items-center justify-center text-center transition-shadow duration-300"
-                style={{
-                  backgroundColor: "var(--color-bg-dark)",
-                  border: "1px solid color-mix(in srgb, var(--color-md-primary-fixed) 6%, transparent)",
-                  boxShadow: "0 30px 60px -20px rgba(0,0,0,0.6)",
-                }}
-              >
-                {/* Illustration + title row */}
-                <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
-                  {/* Illustration */}
-                  <div
-                    className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center mb-5"
-                    style={{
-                      backgroundColor: "rgba(195,244,0,0.04)",
-                      color: "var(--color-md-primary-fixed)",
-                      border: "1px solid rgba(195,244,0,0.1)",
-                    }}
-                  >
-                    <card.Illustration />
-                  </div>
-
-                  {/* Title */}
-                  <h3
-                    className="text-2xl sm:text-3xl font-bold tracking-tight mb-3"
-                    style={{
-                      fontFamily: "var(--font-space-grotesk)",
-                      color: "var(--color-bone-white)",
-                    }}
-                  >
-                    {card.title}
-                  </h3>
-                  
-                  {/* Tech badge */}
-                  <span
-                    className="text-sm font-medium tracking-wide mb-4"
-                    style={{
-                      fontFamily: "var(--font-space-grotesk)",
-                      color: "var(--color-md-primary-fixed)",
-                      opacity: 0.75,
-                    }}
-                  >
-                    {card.tech}
-                  </span>
-
-                  {/* Divider */}
-                  <div className="w-16 h-px mx-auto mb-4" style={{ backgroundColor: "rgba(195,244,0,0.12)" }} />
-                </div>
-
-                {/* Description */}
-                <p
-                  className="text-sm sm:text-base leading-relaxed max-w-lg mx-auto text-center"
-                  style={{
-                    fontFamily: "var(--font-hanken-grotesk)",
-                    color: "var(--color-md-on-surface-variant)",
-                    opacity: 0.85,
-                  }}
-                >
-                  {card.description}
-                </p>
-              </div>
-            </CardSticky>
-          ))}
-        </ContainerScroll>
+      {/* Heading */}
+      <div
+        className="pt-16 sm:pt-20 px-4 sm:px-6 lg:px-8"
+        style={{ containerType: "inline-size" }}
+      >
+        <h2
+          className="font-black leading-[0.9] tracking-tighter uppercase whitespace-nowrap pb-8 sm:pb-12"
+          style={{
+            fontFamily: "var(--font-space-grotesk)",
+            color: "var(--color-md-on-surface)",
+            fontSize: "clamp(2rem, 4.6cqw, 6rem)",
+          }}
+        >
+          <span className="block">What I</span>
+          <span className="block" style={{ color: "var(--color-md-primary-fixed)" }}>
+            Work With.
+          </span>
+        </h2>
       </div>
+
+      {/* Stacking cards */}
+      {CARDS.map((card, i) => {
+        const targetScale = 1 - (CARDS.length - i) * 0.06;
+        return (
+          <SkillCard
+            key={card.title}
+            i={i}
+            title={card.title}
+            description={card.description}
+            tech={card.tech}
+            Illustration={card.Illustration}
+            color={card.color}
+            progress={scrollYProgress}
+            range={[i * 0.25, 1]}
+            targetScale={targetScale}
+          />
+        );
+      })}
+
+      {/* Bottom spacer so last card can scroll out */}
+      <div className="h-[50vh]" />
     </section>
   );
 }
