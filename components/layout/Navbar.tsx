@@ -5,7 +5,6 @@ import { useTheme } from "next-themes";
 import { Sun, Moon, FolderGit2, Briefcase, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSyncExternalStore } from "react";
-import { TextScramble } from "@/components/ui/text-scramble";
 import { TubelightNav } from "@/components/ui/tubelight-navbar";
 import { siteConfig } from "@/data/site-config";
 
@@ -68,28 +67,14 @@ export function Navbar() {
             border: "1px solid color-mix(in srgb, var(--color-md-on-surface) 5%, transparent)",
           }}
         >
-          {/* Brand (left) */}
-          <div
-            className="text-lg font-bold tracking-tighter shrink-0"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-md-on-surface)",
-            }}
-          >
-            {mounted ? (
-              <TextScramble
-                as="span"
-                duration={1.2}
-                speed={0.04}
-                trigger={true}
-                characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%"
-              >
-                LAKSHAY.DEV
-              </TextScramble>
-            ) : (
-              <span>LAKSHAY.DEV</span>
-            )}
-          </div>
+          {/* Brand (left) — icon */}
+          <a href="#" className="shrink-0" aria-label="Home">
+            <img
+              src="/brand-icon.jpg"
+              alt="Logo"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+          </a>
 
           {/* Tubelight nav (center) */}
           <TubelightNav items={NAV_ITEMS} homeSectionId="hero" />
@@ -122,28 +107,14 @@ export function Navbar() {
         }}
       >
         <div className="flex items-center justify-between px-5 py-3 max-w-full mx-auto gap-3">
-          {/* Brand (left) */}
-          <div
-            className="text-lg font-bold tracking-tighter shrink-0"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-md-on-surface)",
-            }}
-          >
-            {mounted ? (
-              <TextScramble
-                as="span"
-                duration={1.2}
-                speed={0.04}
-                trigger={true}
-                characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%"
-              >
-                LAKSHAY.DEV
-              </TextScramble>
-            ) : (
-              <span>LAKSHAY.DEV</span>
-            )}
-          </div>
+          {/* Brand (left) — icon */}
+          <a href="#" className="shrink-0" aria-label="Home">
+            <img
+              src="/brand-icon.jpg"
+              alt="Logo"
+              className="w-9 h-9 rounded-full object-cover"
+            />
+          </a>
 
           {/* Right: CTA + theme toggle */}
           <div className="flex items-center gap-2 shrink-0">

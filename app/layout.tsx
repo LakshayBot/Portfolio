@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   title: "LAKSHAY.DEV",
   description:
     "Full Stack Developer — React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
+  icons: {
+    icon: "/brand-icon.jpg",
+  },
   openGraph: {
     title: "LAKSHAY.DEV — Full Stack Developer",
     description:
