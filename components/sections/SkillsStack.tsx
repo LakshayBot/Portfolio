@@ -123,14 +123,14 @@ export function SkillsStack() {
         </div>
 
         {/* Stacking cards */}
-        <ContainerScroll className="min-h-[220vh] sm:min-h-[240vh]">
+        <ContainerScroll className="min-h-[300vh] sm:min-h-[350vh] md:min-h-[400vh]">
           {CARDS.map((card, i) => (
             <CardSticky
               key={card.title}
               index={i}
-              incrementY={20}
-              incrementZ={6}
-              className="rounded-2xl mx-auto w-[calc(100%-1rem)] sm:w-[88%] md:w-[85%] lg:max-w-2xl"
+              incrementY={80}
+              incrementZ={12}
+              className="rounded-2xl mx-auto w-[calc(100%-1rem)] sm:w-[92%] lg:w-[min(85%,800px)]"
             >
               <div
                 className="p-5 sm:p-7 md:p-8 rounded-2xl backdrop-blur-sm transition-shadow duration-300 hover:shadow-lg"
