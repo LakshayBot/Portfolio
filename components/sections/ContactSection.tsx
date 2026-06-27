@@ -65,69 +65,67 @@ export function ContactSection() {
   return (
     <section
       id="contact"
+      className="min-h-[calc(100dvh-5rem)] sm:min-h-[calc(100dvh-6rem)]"
       style={{
         backgroundColor: "var(--color-bg-dark)",
         marginLeft: "calc(50% - 50vw)",
         marginRight: "calc(50% - 50vw)",
-        minHeight: "100dvh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "space-between",
         alignItems: "center",
-        paddingTop: "4rem",
-        paddingBottom: "4rem",
+        paddingTop: "clamp(2rem, 8vh, 5rem)",
+        paddingBottom: "clamp(2rem, 8vh, 5rem)",
       }}
     >
-      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center gap-8 sm:gap-12 md:gap-16">
-        {/* ── "get in" ── */}
-        <h1
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none select-none lowercase"
-          style={{
-            fontFamily: "var(--font-space-grotesk)",
-            color: "var(--color-bone-white)",
-            letterSpacing: "-0.06em",
-          }}
-        >
-          get in
-        </h1>
+      {/* ── "get in" ── */}
+      <h1
+        className="text-[clamp(3rem,10vw,5rem)] sm:text-6xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none select-none lowercase"
+        style={{
+          fontFamily: "var(--font-space-grotesk)",
+          color: "var(--color-bone-white)",
+          letterSpacing: "-0.06em",
+        }}
+      >
+        get in
+      </h1>
 
-        {/* ── Contact links row ── */}
-        <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-8">
-          {LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target={link.external ? "_blank" : undefined}
-              rel={link.external ? "noopener noreferrer" : undefined}
-              className="group flex items-center gap-2.5 px-4 py-2.5 transition-all duration-300 select-none"
-              style={{
-                color: "var(--color-md-on-surface-variant)",
-              }}
+      {/* ── Contact links row ── */}
+      <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-8 px-4">
+        {LINKS.map((link) => (
+          <a
+            key={link.label}
+            href={link.href}
+            target={link.external ? "_blank" : undefined}
+            rel={link.external ? "noopener noreferrer" : undefined}
+            className="group flex items-center gap-3 px-6 py-4 transition-all duration-300 select-none"
+            style={{
+              color: "var(--color-md-on-surface-variant)",
+            }}
+          >
+            <link.Icon className="w-5 h-5 shrink-0 transition-colors duration-300 group-hover:text-[var(--color-md-primary-fixed)]" />
+            <span
+              className="text-[15px] font-medium transition-colors duration-300 group-hover:text-[var(--color-bone-white)]"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              <link.Icon className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 transition-colors duration-300 group-hover:text-[var(--color-md-primary-fixed)]" />
-              <span
-                className="text-sm sm:text-base font-medium transition-colors duration-300 group-hover:text-[var(--color-bone-white)]"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
-              >
-                {link.label}
-              </span>
-              <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0 opacity-0 -translate-y-0.5 translate-x-0.5 transition-all duration-300 group-hover:opacity-70 group-hover:translate-y-0 group-hover:translate-x-0 text-[var(--color-md-primary-fixed)]" />
-            </a>
-          ))}
-        </div>
-
-        {/* ── "touch" ── */}
-        <h1
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none select-none lowercase"
-          style={{
-            fontFamily: "var(--font-space-grotesk)",
-            color: "var(--color-bone-white)",
-            letterSpacing: "-0.06em",
-          }}
-        >
-          touch
-        </h1>
+              {link.label}
+            </span>
+            <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-0 -translate-y-0.5 translate-x-0.5 transition-all duration-300 group-hover:opacity-70 group-hover:translate-y-0 group-hover:translate-x-0 text-[var(--color-md-primary-fixed)]" />
+          </a>
+        ))}
       </div>
+
+      {/* ── "touch" ── */}
+      <h1
+        className="text-[clamp(3rem,10vw,5rem)] sm:text-6xl md:text-7xl lg:text-[8rem] font-bold tracking-tighter leading-none select-none lowercase"
+        style={{
+          fontFamily: "var(--font-space-grotesk)",
+          color: "var(--color-bone-white)",
+          letterSpacing: "-0.06em",
+        }}
+      >
+        touch
+      </h1>
     </section>
   );
 }
