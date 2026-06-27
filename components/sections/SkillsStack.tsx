@@ -130,14 +130,14 @@ export function SkillsStack() {
               index={i}
               incrementY={0}
               incrementZ={15}
-              className="mx-auto w-[calc(100%-0.75rem)] sm:w-[94%] lg:w-[min(90%,880px)]"
+              className="rounded-none sm:rounded-2xl w-full"
               style={{ zIndex: (i + 1) * 10 }}
             >
               <div
-                className="p-6 sm:p-8 md:p-10 rounded-2xl backdrop-blur-sm min-h-[65vh] sm:min-h-[70vh] flex flex-col justify-center transition-shadow duration-300"
+                className="p-8 sm:p-10 md:p-14 rounded-none sm:rounded-2xl backdrop-blur-sm min-h-[80vh] sm:min-h-[85vh] flex flex-col items-center justify-center text-center transition-shadow duration-300"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(195,244,0,0.06)",
+                  backgroundColor: "var(--color-bg-dark)",
+                  border: "1px solid color-mix(in srgb, var(--color-md-primary-fixed) 6%, transparent)",
                   boxShadow: "0 30px 60px -20px rgba(0,0,0,0.6)",
                 }}
               >
