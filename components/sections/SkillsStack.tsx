@@ -73,7 +73,7 @@ const CARDS = [
     description:
       "Built the CyberGuard AI dashboard and KnowGraph event explorer as performant Next.js frontends with TypeScript-first architecture and Tailwind styling. Each interface handles complex data visualisation, real-time search filtering, and responsive layouts across every device.",
     Illustration: FrontendIllustration,
-    color: "#5196fd",
+    color: "#ed649e",
   },
   {
     title: "Backend & APIs",
@@ -89,7 +89,7 @@ const CARDS = [
     description:
       "Agentic RAG pipelines with LangGraph for retrieval routing, document grading, and answer generation — all powered by local LLM inference through Ollama. Docker Compose orchestrates multi-service deployments with OpenSearch hybrid search, Redis caching, and Langfuse observability tracing.",
     Illustration: AIIllustration,
-    color: "#13006c",
+    color: "#5196fd",
   },
 ];
 
@@ -120,71 +120,59 @@ function SkillCard({ i, title, description, tech, Illustration, color, progress,
       <motion.div
         style={{
           scale,
-          top: `calc(-5vh + ${i * 20}px)`,
+          top: `calc(-5vh + ${i * 25}px)`,
+          backgroundColor: color,
         }}
-        className="flex flex-col items-center justify-center relative w-[90%] sm:w-[75%] md:w-[65%] lg:max-w-[700px] min-h-[380px] sm:min-h-[420px] rounded-2xl p-6 sm:p-10 origin-top"
+        className="flex flex-col relative -top-[25%] w-[90%] sm:w-[75%] md:w-[65%] lg:max-w-[700px] min-h-[380px] sm:min-h-[420px] rounded-2xl p-6 sm:p-10 origin-top shadow-2xl"
       >
-        {/* Card background */}
-        <div
-          className="absolute inset-0 rounded-2xl"
+        {/* Title — centered at top */}
+        <h3
+          className="text-2xl sm:text-3xl font-bold tracking-tight text-center mb-6"
           style={{
-            backgroundColor: "rgba(255,255,255,0.02)",
-            border: "1px solid rgba(195,244,0,0.06)",
-            boxShadow: "0 30px 60px -20px rgba(0,0,0,0.6)",
+            fontFamily: "var(--font-space-grotesk)",
+            color: "#fff",
+            textShadow: "0 2px 4px rgba(0,0,0,0.2)",
           }}
-        />
+        >
+          {title}
+        </h3>
 
-        {/* Content */}
-        <div className="relative z-10 flex flex-col items-center text-center max-w-lg">
-          {/* Illustration */}
-          <div
-            className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center mb-5"
-            style={{
-              backgroundColor: "rgba(195,244,0,0.04)",
-              color: "var(--color-md-primary-fixed)",
-              border: "1px solid rgba(195,244,0,0.1)",
-            }}
-          >
-            <Illustration />
+        {/* Body: text left, illustration right */}
+        <div className="flex flex-col sm:flex-row gap-6 flex-1">
+          {/* Left: description + tech */}
+          <div className="flex-1 flex flex-col justify-center">
+            <span
+              className="text-sm font-medium tracking-wide mb-3 opacity-90"
+              style={{
+                fontFamily: "var(--font-space-grotesk)",
+                color: "#fff",
+              }}
+            >
+              {tech}
+            </span>
+            <p
+              className="text-sm sm:text-base leading-relaxed opacity-90"
+              style={{
+                fontFamily: "var(--font-hanken-grotesk)",
+                color: "#fff",
+              }}
+            >
+              {description}
+            </p>
           </div>
 
-          {/* Title */}
-          <h3
-            className="text-2xl sm:text-3xl font-bold tracking-tight mb-3"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-bone-white)",
-            }}
-          >
-            {title}
-          </h3>
-
-          {/* Tech badge */}
-          <span
-            className="text-sm font-medium tracking-wide mb-4"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              color: "var(--color-md-primary-fixed)",
-              opacity: 0.75,
-            }}
-          >
-            {tech}
-          </span>
-
-          {/* Divider */}
-          <div className="w-16 h-px mx-auto mb-4" style={{ backgroundColor: "rgba(195,244,0,0.12)" }} />
-
-          {/* Description */}
-          <p
-            className="text-sm sm:text-base leading-relaxed"
-            style={{
-              fontFamily: "var(--font-hanken-grotesk)",
-              color: "var(--color-md-on-surface-variant)",
-              opacity: 0.85,
-            }}
-          >
-            {description}
-          </p>
+          {/* Right: illustration */}
+          <div className="shrink-0 flex items-center justify-center">
+            <div
+              className="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.15)",
+                color: "#fff",
+              }}
+            >
+              <Illustration />
+            </div>
+          </div>
         </div>
       </motion.div>
     </div>
