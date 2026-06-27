@@ -120,10 +120,10 @@ function SkillCard({ i, title, description, tech, Illustration, color, progress,
       <motion.div
         style={{
           scale,
-          top: `calc(-5vh + ${i * 25}px)`,
+          top: `calc(-25% - 5vh + ${i * 25}px)`,
           backgroundColor: color,
         }}
-        className="flex flex-col relative -top-[25%] w-[90%] sm:w-[75%] md:w-[65%] lg:max-w-[700px] min-h-[380px] sm:min-h-[420px] rounded-2xl p-6 sm:p-10 origin-top shadow-2xl"
+        className="flex flex-col relative w-[90%] sm:w-[75%] md:w-[65%] lg:max-w-[700px] min-h-[380px] sm:min-h-[420px] rounded-2xl p-6 sm:p-10 origin-top shadow-2xl"
       >
         {/* Title — centered at top */}
         <h3
