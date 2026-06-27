@@ -18,55 +18,55 @@ function isTouchDevice(): boolean {
 
 function FrontendIllustration() {
   return (
-    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+    <svg width="56" height="56" viewBox="0 0 64 64" fill="none">
       <rect x="6" y="6" width="52" height="38" rx="4" stroke="currentColor" strokeWidth="2" />
-      <rect x="10" y="10" width="44" height="30" rx="2" fill="currentColor" opacity="0.06" />
+      <rect x="10" y="10" width="44" height="30" rx="2" fill="currentColor" opacity="0.08" />
       <path d="M10 18h44" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
-      <circle cx="22" cy="28" r="2" fill="currentColor" opacity="0.5" />
-      <circle cx="32" cy="28" r="2" fill="currentColor" opacity="0.5" />
-      <circle cx="42" cy="28" r="2" fill="currentColor" opacity="0.5" />
-      <rect x="18" y="35" width="14" height="3" rx="1.5" fill="currentColor" opacity="0.3" />
-      <rect x="34" y="35" width="8" height="3" rx="1.5" fill="currentColor" opacity="0.3" />
-      <rect x="8" y="48" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <rect x="28" y="48" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <rect x="48" y="48" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <circle cx="22" cy="28" r="2" fill="currentColor" opacity="0.6" />
+      <circle cx="32" cy="28" r="2" fill="currentColor" opacity="0.6" />
+      <circle cx="42" cy="28" r="2" fill="currentColor" opacity="0.6" />
+      <rect x="18" y="35" width="14" height="3" rx="1.5" fill="currentColor" opacity="0.35" />
+      <rect x="34" y="35" width="8" height="3" rx="1.5" fill="currentColor" opacity="0.35" />
+      <rect x="8" y="48" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
+      <rect x="28" y="48" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
+      <rect x="48" y="48" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
     </svg>
   );
 }
 
 function BackendIllustration() {
   return (
-    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+    <svg width="56" height="56" viewBox="0 0 64 64" fill="none">
       <rect x="16" y="6" width="32" height="52" rx="4" stroke="currentColor" strokeWidth="2" />
-      <rect x="20" y="10" width="24" height="44" rx="2" fill="currentColor" opacity="0.04" />
-      <circle cx="32" cy="22" r="3" fill="currentColor" opacity="0.7" />
-      <circle cx="32" cy="32" r="3" fill="currentColor" opacity="0.4" />
-      <circle cx="32" cy="42" r="3" fill="currentColor" opacity="0.4" />
-      <path d="M44 22h8M44 32h8M44 42h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
-      <circle cx="52" cy="22" r="1.5" fill="currentColor" opacity="0.4" />
-      <circle cx="52" cy="32" r="1.5" fill="currentColor" opacity="0.4" />
-      <circle cx="52" cy="42" r="1.5" fill="currentColor" opacity="0.4" />
-      <path d="M20 52h24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.3" />
-      <path d="M20 56h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.2" />
+      <rect x="20" y="10" width="24" height="44" rx="2" fill="currentColor" opacity="0.06" />
+      <circle cx="32" cy="22" r="3" fill="currentColor" opacity="0.8" />
+      <circle cx="32" cy="32" r="3" fill="currentColor" opacity="0.5" />
+      <circle cx="32" cy="42" r="3" fill="currentColor" opacity="0.5" />
+      <path d="M44 22h8M44 32h8M44 42h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.55" />
+      <circle cx="52" cy="22" r="1.5" fill="currentColor" opacity="0.5" />
+      <circle cx="52" cy="32" r="1.5" fill="currentColor" opacity="0.5" />
+      <circle cx="52" cy="42" r="1.5" fill="currentColor" opacity="0.5" />
+      <path d="M20 52h24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
+      <path d="M20 56h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.25" />
     </svg>
   );
 }
 
 function AIIllustration() {
   return (
-    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+    <svg width="56" height="56" viewBox="0 0 64 64" fill="none">
       <circle cx="32" cy="18" r="5" stroke="currentColor" strokeWidth="2" />
       <circle cx="18" cy="44" r="4" stroke="currentColor" strokeWidth="2" />
       <circle cx="46" cy="44" r="4" stroke="currentColor" strokeWidth="2" />
       <circle cx="32" cy="52" r="4" stroke="currentColor" strokeWidth="2" />
-      <line x1="29" y1="23" x2="20" y2="40" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <line x1="35" y1="23" x2="44" y2="40" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <line x1="22" y1="47" x2="30" y2="49" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <line x1="42" y1="47" x2="34" y2="49" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <circle cx="32" cy="18" r="1.5" fill="currentColor" opacity="0.8" />
-      <circle cx="18" cy="44" r="1.5" fill="currentColor" opacity="0.8" />
-      <circle cx="46" cy="44" r="1.5" fill="currentColor" opacity="0.8" />
-      <circle cx="32" cy="52" r="1.5" fill="currentColor" opacity="0.8" />
+      <line x1="29" y1="23" x2="20" y2="40" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
+      <line x1="35" y1="23" x2="44" y2="40" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
+      <line x1="22" y1="47" x2="30" y2="49" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
+      <line x1="42" y1="47" x2="34" y2="49" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
+      <circle cx="32" cy="18" r="1.5" fill="currentColor" opacity="0.9" />
+      <circle cx="18" cy="44" r="1.5" fill="currentColor" opacity="0.9" />
+      <circle cx="46" cy="44" r="1.5" fill="currentColor" opacity="0.9" />
+      <circle cx="32" cy="52" r="1.5" fill="currentColor" opacity="0.9" />
     </svg>
   );
 }
@@ -76,77 +76,100 @@ function AIIllustration() {
 const CARDS = [
   {
     title: "Frontend",
-    tech: "React · Next.js · TypeScript · Tailwind",
+    label: "React · Next.js · TypeScript · Tailwind",
     description:
       "Built the CyberGuard AI dashboard and KnowGraph event explorer as performant Next.js frontends with TypeScript-first architecture and Tailwind styling. Each interface handles complex data visualisation, real-time search filtering, and responsive layouts across every device.",
     Illustration: FrontendIllustration,
-    color: "#ed649e",
+    accent: "#ed649e",
   },
   {
     title: "Backend & APIs",
-    tech: ".NET 8 · FastAPI · EF Core · PostgreSQL · Redis",
+    label: ".NET 8 · FastAPI · EF Core · PostgreSQL · Redis",
     description:
       "A .NET 8 API gateway orchestrates five Python FastAPI microservices in CyberGuard — handling vulnerability search, PDF analysis, and agentic RAG routing. KnowGraph uses Clean Architecture with MediatR, CQRS, and FluentValidation for a Neo4j-backed causal graph engine.",
     Illustration: BackendIllustration,
-    color: "#8f89ff",
+    accent: "#8f89ff",
   },
   {
     title: "AI & Infrastructure",
-    tech: "LangGraph · Ollama · Docker · OpenSearch · Langfuse",
+    label: "LangGraph · Ollama · Docker · OpenSearch · Langfuse",
     description:
       "Agentic RAG pipelines with LangGraph for retrieval routing, document grading, and answer generation — all powered by local LLM inference through Ollama. Docker Compose orchestrates multi-service deployments with OpenSearch hybrid search, Redis caching, and Langfuse observability tracing.",
     Illustration: AIIllustration,
-    color: "#5196fd",
+    accent: "#5196fd",
   },
 ];
 
-/* ── Card content (presentational, no animation logic) ── */
+/* ── Card content ── */
 
 interface CardContentProps {
   title: string;
-  tech: string;
+  label: string;
   description: string;
   Illustration: React.ComponentType;
-  color: string;
+  accent: string;
 }
 
-function CardContent({ title, tech, description, Illustration, color }: CardContentProps) {
+function CardContent({ title, label, description, Illustration, accent }: CardContentProps) {
   return (
     <div
-      className="flex flex-col min-h-[380px] sm:min-h-[420px] rounded-2xl p-6 sm:p-10 shadow-2xl"
-      style={{ backgroundColor: color }}
+      className="flex flex-col min-h-[380px] sm:min-h-[420px] rounded-2xl p-6 sm:p-10 shadow-2xl relative overflow-hidden"
+      style={{
+        backgroundColor: "color-mix(in srgb, var(--color-md-on-surface) 4%, transparent)",
+        border: "1px solid color-mix(in srgb, var(--color-md-on-surface) 8%, transparent)",
+      }}
     >
+      {/* Left accent strip */}
+      <div
+        className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full"
+        style={{ backgroundColor: accent }}
+      />
+
+      {/* Title */}
       <h3
-        className="text-2xl sm:text-3xl font-bold tracking-tight text-center mb-6"
+        className="text-2xl sm:text-3xl font-bold tracking-tight text-center mb-6 pl-3"
         style={{
           fontFamily: "var(--font-space-grotesk)",
-          color: "#fff",
-          textShadow: "0 2px 4px rgba(0,0,0,0.2)",
+          color: "var(--color-md-on-surface)",
         }}
       >
         {title}
       </h3>
 
-      <div className="flex flex-col sm:flex-row gap-6 flex-1">
+      {/* Body: text left, illustration right */}
+      <div className="flex flex-col sm:flex-row gap-6 flex-1 pl-3">
+        {/* Left: description + label */}
         <div className="flex-1 flex flex-col justify-center">
           <span
-            className="text-sm font-medium tracking-wide mb-3 opacity-90"
-            style={{ fontFamily: "var(--font-space-grotesk)", color: "#fff" }}
+            className="text-sm font-medium tracking-wide mb-3"
+            style={{
+              fontFamily: "var(--font-space-grotesk)",
+              color: "var(--color-md-primary-fixed)",
+              opacity: 0.8,
+            }}
           >
-            {tech}
+            {label}
           </span>
           <p
-            className="text-sm sm:text-base leading-relaxed opacity-90"
-            style={{ fontFamily: "var(--font-hanken-grotesk)", color: "#fff" }}
+            className="text-sm sm:text-base leading-relaxed"
+            style={{
+              fontFamily: "var(--font-hanken-grotesk)",
+              color: "var(--color-md-on-surface-variant)",
+              opacity: 0.85,
+            }}
           >
             {description}
           </p>
         </div>
 
+        {/* Right: illustration */}
         <div className="shrink-0 flex items-center justify-center">
           <div
             className="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center"
-            style={{ backgroundColor: "rgba(255,255,255,0.15)", color: "#fff" }}
+            style={{
+              backgroundColor: "color-mix(in srgb, var(--color-acid-lime) 8%, transparent)",
+              color: "var(--color-md-primary-fixed)",
+            }}
           >
             <Illustration />
           </div>
@@ -158,7 +181,7 @@ function CardContent({ title, tech, description, Illustration, color }: CardCont
 
 /* ── Skills Stack Section ── */
 
-const CARD_SCROLL_PX = 600; // scroll distance allocated per card
+const CARD_SCROLL_PX = 400; // scroll distance allocated per card
 
 export function SkillsStack() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -277,25 +300,26 @@ export function SkillsStack() {
 
       {/* ── Touch / reduced-motion fallback ── */}
       {touch || reducedMotion ? (
-        <div style={fullWidthBg}>
-          {CARDS.map((card) => (
+        <div style={fullWidthBg} className="pb-12 sm:pb-20">
+          {CARDS.map((card, i) => (
             <div
               key={card.title}
-              className="h-screen flex items-center justify-center"
-              style={{ backgroundColor: "var(--color-bg-dark)" }}
+              className="px-4 sm:px-6 lg:px-8 py-6"
             >
-              <div className="w-[90%] sm:w-[75%] md:w-[65%] lg:max-w-[700px]">
+              <div
+                className="mx-auto w-full lg:max-w-[700px] animate-[fade-up_0.5s_ease-out_both]"
+                style={{ animationDelay: `${i * 0.12}s` }}
+              >
                 <CardContent
                   title={card.title}
-                  tech={card.tech}
+                  label={card.label}
                   description={card.description}
                   Illustration={card.Illustration}
-                  color={card.color}
+                  accent={card.accent}
                 />
               </div>
             </div>
           ))}
-          <div className="h-[50vh]" style={{ backgroundColor: "var(--color-bg-dark)" }} />
         </div>
       ) : (
         /* ── Desktop: explicit pixel height + CSS sticky + overflow hidden ── */
@@ -330,10 +354,10 @@ export function SkillsStack() {
               >
                 <CardContent
                   title={card.title}
-                  tech={card.tech}
+                  label={card.label}
                   description={card.description}
                   Illustration={card.Illustration}
-                  color={card.color}
+                  accent={card.accent}
                 />
               </div>
             ))}
