@@ -59,18 +59,18 @@ export function Navbar() {
 
   return (
     <>
-      {/* ── Top bar ── */}
-      <nav
-        className="fixed top-0 w-full z-50 backdrop-blur-md"
-        style={{
-          backgroundColor: "color-mix(in srgb, var(--color-bg-dark) 70%, transparent)",
-          borderBottom: "1px solid color-mix(in srgb, var(--color-md-primary-fixed) 8%, transparent)",
-        }}
-      >
-        <div className="flex items-center justify-between px-5 sm:px-6 md:px-8 py-3 max-w-full mx-auto gap-3">
-          {/* ── Brand (left) ── */}
+      {/* ── Desktop: floating pill navbar ── */}
+      <nav className="hidden sm:block fixed top-6 left-1/2 -translate-x-1/2 z-50">
+        <div
+          className="flex items-center justify-between gap-8 rounded-full px-6 py-3 shadow-2xl backdrop-blur-xl transition-shadow"
+          style={{
+            backgroundColor: "color-mix(in srgb, var(--color-deep-obsidian) 80%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--color-md-on-surface) 5%, transparent)",
+          }}
+        >
+          {/* Brand (left) */}
           <div
-            className="text-lg md:text-xl font-bold tracking-tighter shrink-0"
+            className="text-lg font-bold tracking-tighter shrink-0"
             style={{
               fontFamily: "var(--font-space-grotesk)",
               color: "var(--color-md-on-surface)",
@@ -91,17 +91,65 @@ export function Navbar() {
             )}
           </div>
 
-          {/* ── Desktop: tubelight nav (center) ── */}
-          <div className="hidden sm:block">
-            <TubelightNav items={NAV_ITEMS} homeSectionId="hero" />
+          {/* Tubelight nav (center) */}
+          <TubelightNav items={NAV_ITEMS} homeSectionId="hero" />
+
+          {/* Theme toggle (right) */}
+          {mounted && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="rounded-lg shrink-0"
+              aria-label="Toggle dark mode"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-5 w-5" style={{ color: "var(--color-md-on-surface-variant)" }} />
+              ) : (
+                <Moon className="h-5 w-5" style={{ color: "var(--color-md-on-surface-variant)" }} />
+              )}
+            </Button>
+          )}
+        </div>
+      </nav>
+
+      {/* ── Mobile: top bar (unchanged) ── */}
+      <nav
+        className="sm:hidden fixed top-0 w-full z-50 backdrop-blur-md"
+        style={{
+          backgroundColor: "color-mix(in srgb, var(--color-bg-dark) 70%, transparent)",
+          borderBottom: "1px solid color-mix(in srgb, var(--color-md-primary-fixed) 8%, transparent)",
+        }}
+      >
+        <div className="flex items-center justify-between px-5 py-3 max-w-full mx-auto gap-3">
+          {/* Brand (left) */}
+          <div
+            className="text-lg font-bold tracking-tighter shrink-0"
+            style={{
+              fontFamily: "var(--font-space-grotesk)",
+              color: "var(--color-md-on-surface)",
+            }}
+          >
+            {mounted ? (
+              <TextScramble
+                as="span"
+                duration={1.2}
+                speed={0.04}
+                trigger={true}
+                characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%"
+              >
+                LAKSHAY.DEV
+              </TextScramble>
+            ) : (
+              <span>LAKSHAY.DEV</span>
+            )}
           </div>
 
-          {/* ── Right: theme toggle (desktop) / CTA button (mobile) ── */}
+          {/* Right: CTA + theme toggle */}
           <div className="flex items-center gap-2 shrink-0">
-            {/* Mobile CTA */}
             <a
               href="#contact"
-              className="sm:hidden inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3.5 py-2 rounded-full border transition-all duration-200"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3.5 py-2 rounded-full border transition-all duration-200"
               style={{
                 fontFamily: "var(--font-space-grotesk)",
                 color: "var(--color-bg-dark)",
@@ -116,7 +164,6 @@ export function Navbar() {
               </svg>
             </a>
 
-            {/* Theme toggle (always visible) */}
             {mounted && (
               <Button
                 variant="ghost"
@@ -136,7 +183,7 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* ── Mobile: bottom pill nav (outside <nav> so backdrop-filter doesn't break fixed positioning) ── */}
+      {/* ── Mobile: bottom pill nav (unchanged) ── */}
       <div className="sm:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-[200]">
         <TubelightNav items={NAV_ITEMS} homeSectionId="hero" className="shadow-xl shadow-black/40" />
       </div>
