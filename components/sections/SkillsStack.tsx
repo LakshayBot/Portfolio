@@ -105,14 +105,18 @@ interface SkillCardProps {
   progress: MotionValue<number>;
   range: [number, number];
   targetScale: number;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-function SkillCard({ i, title, description, tech, Illustration, color, progress, range, targetScale }: SkillCardProps) {
-  const container = useRef<HTMLDivElement>(null);
+function SkillCard({ i, title, description, tech, Illustration, color, progress, range, targetScale, containerRef }: SkillCardProps) {
   const scale = useTransform(progress, range, [1, targetScale]);
 
   return (
-    <div ref={container} className="h-screen flex items-center justify-center sticky top-0">
+    <div
+      ref={containerRef}
+      className="h-screen flex items-center justify-center sticky top-0"
+      style={{ backgroundColor: "var(--color-bg-dark)" }}
+    >
       <motion.div
         style={{
           scale,
@@ -190,17 +194,17 @@ function SkillCard({ i, title, description, tech, Illustration, color, progress,
 /* ── Skills Stack Section ── */
 
 export function SkillsStack() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const firstCardRef = useRef<HTMLDivElement>(null);
   const progress = useMotionValue(0);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+    const first = firstCardRef.current;
+    if (!first) return;
 
     const trigger = ScrollTrigger.create({
-      trigger: section,
+      trigger: first,
       start: "top top",
-      end: "bottom bottom",
+      end: "bottom+=50% top",
       scrub: true,
       onUpdate: (self) => {
         progress.set(self.progress);
@@ -211,23 +215,20 @@ export function SkillsStack() {
   }, [progress]);
 
   return (
-    <section
-      id="skills"
-      ref={sectionRef}
-      className="relative"
-      style={{
-        backgroundColor: "var(--color-bg-dark)",
-        marginLeft: "calc(50% - 50vw)",
-        marginRight: "calc(50% - 50vw)",
-      }}
-    >
+    <>
       {/* Heading */}
-      <div
-        className="pt-16 sm:pt-20 px-4 sm:px-6 lg:px-8"
-        style={{ containerType: "inline-size" }}
+      <section
+        id="skills"
+        className="pt-16 sm:pt-20 pb-4 px-4 sm:px-6 lg:px-8"
+        style={{
+          backgroundColor: "var(--color-bg-dark)",
+          marginLeft: "calc(50% - 50vw)",
+          marginRight: "calc(50% - 50vw)",
+          containerType: "inline-size",
+        }}
       >
         <h2
-          className="font-black leading-[0.9] tracking-tighter uppercase whitespace-nowrap pb-8 sm:pb-12"
+          className="font-black leading-[0.9] tracking-tighter uppercase whitespace-nowrap"
           style={{
             fontFamily: "var(--font-space-grotesk)",
             color: "var(--color-md-on-surface)",
@@ -239,9 +240,9 @@ export function SkillsStack() {
             Work With.
           </span>
         </h2>
-      </div>
+      </section>
 
-      {/* Stacking cards */}
+      {/* Stacking cards — NO wrapper parent so sticky is relative to viewport */}
       {CARDS.map((card, i) => {
         const targetScale = 1 - (CARDS.length - i) * 0.06;
         return (
@@ -256,12 +257,20 @@ export function SkillsStack() {
             progress={progress}
             range={[i * 0.25, 1]}
             targetScale={targetScale}
+            containerRef={i === 0 ? firstCardRef : undefined}
           />
         );
       })}
 
       {/* Bottom spacer so last card can scroll out */}
-      <div className="h-[50vh]" />
-    </section>
+      <div
+        className="h-[50vh]"
+        style={{
+          backgroundColor: "var(--color-bg-dark)",
+          marginLeft: "calc(50% - 50vw)",
+          marginRight: "calc(50% - 50vw)",
+        }}
+      />
+    </>
   );
 }

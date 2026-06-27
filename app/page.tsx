@@ -18,7 +18,7 @@ export default function Home() {
     <>
       <Navbar />
       <PageLine>
-        <main className="overflow-x-hidden">
+        <main>
           {/* ── Hero — full viewport height ── */}
           <section
             id="hero"
