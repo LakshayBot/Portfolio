@@ -23,6 +23,22 @@ export function Footer() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
+  const name = "LAKSHAY";
+
+  const letterVariants = {
+    visible: (i: number) => ({
+      translateY: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 12,
+        duration: 0.4,
+        delay: i * 0.04,
+      },
+    }),
+    hidden: { translateY: 200 },
+  };
+
   return (
     <footer
       className="relative w-full sm:pt-14 pt-8"
@@ -106,49 +122,32 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Animated name */}
+        {/* Animated name — letter by letter spring entrance */}
         <div
           ref={ref}
           className="border-y mt-10 md:py-8 py-6 text-center overflow-hidden"
           style={{ borderColor: "color-mix(in srgb, var(--color-md-on-surface) 8%, transparent)" }}
         >
-          <motion.h2
-            className="font-black uppercase tracking-tighter leading-[0.9] select-none"
+          <h2
+            className="font-black uppercase tracking-tighter leading-[0.9] select-none inline-flex"
             style={{
               fontFamily: "var(--font-space-grotesk)",
               fontSize: "clamp(2.5rem, 8vw, 7rem)",
-              color: "var(--color-md-primary-fixed)",
-            }}
-            initial={{ y: 120, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : {}}
-            transition={{
-              type: "spring",
-              stiffness: 100,
-              damping: 12,
-              delay: 0.1,
             }}
           >
-            LAKSHAY
-          </motion.h2>
-          <motion.p
-            className="font-light tracking-widest uppercase mt-1"
-            style={{
-              fontFamily: "var(--font-space-grotesk)",
-              fontSize: "clamp(0.7rem, 1.5vw, 1rem)",
-              color: "var(--color-md-on-surface-variant)",
-              opacity: 0.5,
-            }}
-            initial={{ y: 40, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : {}}
-            transition={{
-              type: "spring",
-              stiffness: 100,
-              damping: 12,
-              delay: 0.2,
-            }}
-          >
-            Full Stack Developer
-          </motion.p>
+            {name.split("").map((letter, i) => (
+              <motion.span
+                key={i}
+                custom={i}
+                variants={letterVariants}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                style={{ color: "var(--color-md-primary-fixed)" }}
+              >
+                {letter}
+              </motion.span>
+            ))}
+          </h2>
         </div>
 
         {/* Copyright bar */}
