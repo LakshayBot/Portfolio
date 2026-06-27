@@ -115,8 +115,8 @@ function CardContent({ title, label, description, Illustration, accent }: CardCo
     <div
       className="flex flex-col min-h-[380px] sm:min-h-[420px] rounded-2xl p-6 sm:p-10 shadow-2xl relative overflow-hidden"
       style={{
-        backgroundColor: "color-mix(in srgb, var(--color-md-on-surface) 4%, transparent)",
-        border: "1px solid color-mix(in srgb, var(--color-md-on-surface) 8%, transparent)",
+        backgroundColor: "var(--color-deep-obsidian)",
+        border: "1px solid color-mix(in srgb, var(--color-md-on-surface) 10%, transparent)",
       }}
     >
       {/* Left accent strip */}
