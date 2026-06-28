@@ -226,7 +226,7 @@ export function RulerCarousel({
         </div>
 
         {/* Carousel track */}
-        <div className="flex items-center justify-center w-full h-full relative overflow-hidden">
+        <div className="flex items-center justify-start w-full h-full relative overflow-hidden">
           <motion.div
             className="flex items-center gap-[100px]"
             animate={{ x: targetX }}
