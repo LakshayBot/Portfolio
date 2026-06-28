@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface CarouselItem {
   id: number;
   title: string;
+  href?: string;
+  external?: boolean;
 }
 
 // Create infinite items by triplicating the array
@@ -23,6 +25,9 @@ const createInfiniteItems = (originalItems: CarouselItem[]) => {
   }
   return items;
 };
+
+const SLOT_WIDTH = 500; // 400px item + 100px gap
+const ITEM_WIDTH = 400;
 
 const RulerLines = ({
   top = true,
@@ -72,10 +77,34 @@ export function RulerCarousel({
 }) {
   const infiniteItems = createInfiniteItems(originalItems);
   const itemsPerSet = originalItems.length;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
 
-  // Start with the middle set, first item
-  const [activeIndex, setActiveIndex] = useState(itemsPerSet + 0);
+  // Start with the middle-set's middle item
+  const centerSlot = Math.floor(itemsPerSet / 2);
+  const [activeIndex, setActiveIndex] = useState(itemsPerSet + centerSlot);
   const [isResetting, setIsResetting] = useState(false);
+
+  // Track container width for centering
+  useEffect(() => {
+    const update = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const navigateTo = useCallback((item: CarouselItem) => {
+    if (!item.href) return;
+    if (item.external) {
+      window.open(item.href, "_blank", "noopener noreferrer");
+    } else {
+      window.location.href = item.href;
+    }
+  }, []);
 
   const handleItemClick = (newIndex: number) => {
     if (isResetting) return;
@@ -99,6 +128,9 @@ export function RulerCarousel({
     }
 
     setActiveIndex(closestIndex);
+
+    // Navigate on click
+    navigateTo(infiniteItems[closestIndex]);
   };
 
   const handlePrevious = () => {
@@ -140,18 +172,15 @@ export function RulerCarousel({
       } else if (event.key === "ArrowRight") {
         event.preventDefault();
         setActiveIndex((prev) => prev + 1);
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        navigateTo(infiniteItems[activeIndex]);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isResetting]);
-
-  // Calculate target position - center the active item
-  const itemIndexInSet = activeIndex % itemsPerSet;
-  const centerSlot = 0; // we want slot 0 centered
-  const itemWidth = 400 + 100; // 400px width + 100px gap
-  const targetX = -(itemIndexInSet - centerSlot) * itemWidth;
+  }, [isResetting, activeIndex, infiniteItems, navigateTo]);
 
   // Notify parent of active item change
   useEffect(() => {
@@ -159,13 +188,19 @@ export function RulerCarousel({
     onActiveChange?.(originalItems[idx]);
   }, [activeIndex, itemsPerSet, originalItems, onActiveChange]);
 
-  // Get current page info
+  // Calculate target position — center the active item in the viewport
+  const itemIndexInSet = activeIndex % itemsPerSet;
+  const targetX =
+    containerWidth > 0
+      ? containerWidth / 2 - itemIndexInSet * SLOT_WIDTH - ITEM_WIDTH / 2
+      : -(itemIndexInSet - centerSlot) * SLOT_WIDTH;
+
   const currentPage = itemIndexInSet + 1;
   const totalPages = itemsPerSet;
 
   return (
     <div className="w-full flex flex-col items-center justify-center py-8">
-      <div className="w-full flex flex-col justify-center relative">
+      <div className="w-full flex flex-col justify-center relative" ref={containerRef}>
         {/* Top ruler lines */}
         <div className="flex items-center justify-center">
           <RulerLines top />
@@ -197,7 +232,7 @@ export function RulerCarousel({
                   className="text-4xl md:text-6xl font-bold whitespace-nowrap cursor-pointer flex items-center justify-center"
                   style={{
                     fontFamily: "var(--font-space-grotesk)",
-                    width: "400px",
+                    width: `${ITEM_WIDTH}px`,
                     color: isActive
                       ? "var(--color-md-primary-fixed)"
                       : "var(--color-md-on-surface-variant)",
@@ -243,14 +278,20 @@ export function RulerCarousel({
           />
         </button>
 
-        <div className="flex items-center gap-2" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+        <div
+          className="flex items-center gap-2"
+          style={{ fontFamily: "var(--font-space-grotesk)" }}
+        >
           <span
             className="text-sm font-medium"
             style={{ color: "var(--color-md-on-surface-variant)" }}
           >
             {String(currentPage).padStart(2, "0")}
           </span>
-          <span className="text-sm" style={{ color: "var(--color-md-on-surface-variant)", opacity: 0.4 }}>
+          <span
+            className="text-sm"
+            style={{ color: "var(--color-md-on-surface-variant)", opacity: 0.4 }}
+          >
             /
           </span>
           <span

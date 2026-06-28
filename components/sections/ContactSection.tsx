@@ -67,7 +67,12 @@ export function ContactSection() {
       {/* ── Ruler Carousel ── */}
       <div className="w-full">
         <RulerCarousel
-          originalItems={CONTACT_ITEMS.map(({ id, title }) => ({ id, title }))}
+          originalItems={CONTACT_ITEMS.map(({ id, title, href, external }) => ({
+            id,
+            title,
+            href,
+            external,
+          }))}
           onActiveChange={handleActiveChange}
         />
       </div>
