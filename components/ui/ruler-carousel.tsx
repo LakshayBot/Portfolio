@@ -83,7 +83,6 @@ export function RulerCarousel({
   // Start with the middle-set's middle item
   const centerSlot = Math.floor(itemsPerSet / 2);
   const [activeIndex, setActiveIndex] = useState(itemsPerSet + centerSlot);
-  const [visualCenterIndex, setVisualCenterIndex] = useState(itemsPerSet + centerSlot);
   const [isResetting, setIsResetting] = useState(false);
 
   // Track container width for centering
@@ -175,19 +174,13 @@ export function RulerCarousel({
         setActiveIndex((prev) => prev + 1);
       } else if (event.key === "Enter") {
         event.preventDefault();
-        navigateTo(infiniteItems[visualCenterIndex]);
+        navigateTo(infiniteItems[visualCenterIdx]);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isResetting, activeIndex, infiniteItems, navigateTo]);
-
-  // Notify parent of active item change (based on visual center)
-  useEffect(() => {
-    const idx = visualCenterIndex % itemsPerSet;
-    onActiveChange?.(originalItems[idx]);
-  }, [visualCenterIndex, itemsPerSet, originalItems, onActiveChange]);
 
   // Calculate target position — center the active item in the viewport
   const itemIndexInSet = activeIndex % itemsPerSet;
@@ -196,8 +189,33 @@ export function RulerCarousel({
       ? containerWidth / 2 - itemIndexInSet * SLOT_WIDTH - ITEM_WIDTH / 2
       : -(itemIndexInSet - centerSlot) * SLOT_WIDTH;
 
-  const currentPage = (visualCenterIndex % itemsPerSet) + 1;
+  // Compute the visual center index from targetX.
+  // targetX always positions the active item at viewport center, so the
+  // item physically nearest to center is exactly the one targetX was
+  // computed for. This highlights the correct item even before the
+  // spring animation settles.
+  const viewportCenter = containerWidth / 2;
+  const visualCenterIdx =
+    containerWidth > 0
+      ? Math.max(
+          0,
+          Math.min(
+            infiniteItems.length - 1,
+            Math.round(
+              (viewportCenter - targetX - ITEM_WIDTH / 2) / SLOT_WIDTH
+            )
+          )
+        )
+      : activeIndex;
+
+  const currentPage = (visualCenterIdx % itemsPerSet) + 1;
   const totalPages = itemsPerSet;
+
+  // Notify parent of active item change
+  useEffect(() => {
+    const idx = visualCenterIdx % itemsPerSet;
+    onActiveChange?.(originalItems[idx]);
+  }, [visualCenterIdx, itemsPerSet, originalItems, onActiveChange]);
 
   return (
     <div className="w-full flex flex-col items-center justify-center py-8">
@@ -212,21 +230,6 @@ export function RulerCarousel({
           <motion.div
             className="flex items-center gap-[100px]"
             animate={{ x: targetX }}
-            onUpdate={(latest) => {
-              if (containerWidth === 0) return;
-              const viewportCenter = containerWidth / 2;
-              let bestIdx = 0;
-              let bestDist = Infinity;
-              for (let i = 0; i < infiniteItems.length; i++) {
-                const itemCenter = (latest.x as number) + i * SLOT_WIDTH + ITEM_WIDTH / 2;
-                const dist = Math.abs(itemCenter - viewportCenter);
-                if (dist < bestDist) {
-                  bestDist = dist;
-                  bestIdx = i;
-                }
-              }
-              setVisualCenterIndex(bestIdx);
-            }}
             transition={
               isResetting
                 ? { duration: 0 }
@@ -239,7 +242,7 @@ export function RulerCarousel({
             }
           >
             {infiniteItems.map((item, index) => {
-              const isActive = index === visualCenterIndex;
+              const isActive = index === visualCenterIdx;
 
               return (
                 <motion.button
