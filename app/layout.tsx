@@ -22,12 +22,12 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "LAKSHAY.DEV",
   description:
-    "Full Stack Developer — React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
+    "Just A Developer — React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
   icons: {
     icon: "/brand-icon.jpg",
   },
   openGraph: {
-    title: "LAKSHAY.DEV — Full Stack Developer",
+    title: "LAKSHAY.DEV — Just A Developer",
     description:
       "React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
     url: "https://lakshay.dev",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LAKSHAY.DEV — Full Stack Developer",
+    title: "LAKSHAY.DEV — Just A Developer",
     description:
       "React, Next.js, Node.js, TypeScript. Building scalable, efficient solutions.",
   },
