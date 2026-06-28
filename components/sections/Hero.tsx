@@ -27,7 +27,7 @@ export async function Hero() {
             className="text-base leading-relaxed max-w-md"
             style={{ color: "var(--color-md-on-surface-variant)" }}
           >
-            A full stack developer building AI-integrated systems and
+            Just a developer building AI-integrated systems and
             microservice architectures. My work spans Next.js frontends,
             .NET API gateways, agentic RAG pipelines, and containerised
             multi-service deployments with Docker.
